@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "codeselfstudy",
-    "description": "A browser extension for Code Self Study",
+    "description": "A browser extension for Code Self Study (codeselfstudy.com)",
     "version": "0.0.1",
     "icons": {
         "64": "icons/icon.png"
@@ -11,7 +11,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["*://*.mozilla.org/*"],
+            "matches": ["*://*.codeselfstudy.com/*"],
             "js": ["content_script.js"]
         }
     ],
@@ -20,7 +20,7 @@
             "64": "icons/icon.png"
         },
         "default_popup": "browserAction/index.html",
-        "default_title": "codeselfstudy"
+        "default_title": "Code Self Study"
     },
     "options_ui": {
         "page": "options/index.html"
