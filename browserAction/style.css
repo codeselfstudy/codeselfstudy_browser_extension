@@ -10,6 +10,7 @@ body {
     /* margin: 0; */
     /* padding: 0; */
 }
+
 ul {
     padding: 0;
     margin: 0;
@@ -20,8 +21,8 @@ li {
     margin: 19px 0;
 }
 
-a,
-a:visited {
+ul a,
+ul a:visited {
     text-decoration: none;
     padding: 7px;
     background-color: #666;
@@ -32,4 +33,12 @@ a:visited {
     /* TODO make these buttons full-width */
     /* This isn't working */
     /* width: 100%; */
+}
+
+h1,
+h1 a,
+h1 a:visited {
+    color: #41ff00;
+    font-size: 1.27rem;
+    text-decoration: none;
 }
