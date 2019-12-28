@@ -1,3 +1,30 @@
-h1 {
-    font-style: italic;
+@import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
+body {
+    background-color: #363636;
+    color: #fff;
+    font-family: "Inconsolata", monospace;
+    /* margin: 0; */
+    /* padding: 0; */
+}
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+    margin: 19px 0;
+}
+
+a, a:visited {
+    text-decoration: none;
+    padding: 7px;
+    background-color: #666;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+
+    /* TODO make these buttons full-width */
+    /* This isn't working */
+    /* width: 100%; */
 }
