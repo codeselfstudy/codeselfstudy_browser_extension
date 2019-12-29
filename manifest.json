@@ -11,7 +11,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["*://*.codeselfstudy.com/*"],
+            "matches": ["*://*/*"],
             "js": ["content_script.js"]
         }
     ],
