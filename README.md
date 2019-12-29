@@ -10,7 +10,7 @@ Pull requests are welcome, but please check if a feature is needed before adding
 
 ### Coding Style
 
-Please use prettier.js and follow the code style specified in the `.prettierrc` and `.editorconfig` files. There are editor plugins that with auto-format the code for you, or you can also run this command to format the code manually:
+Please use prettier.js and follow the code style specified in the `.prettierrc` and `.editorconfig` files. There are editor plugins that with auto-format the code for you, or you can run this command to format the code manually:
 
 ```text
 $ npm run prettier:fix
@@ -18,7 +18,7 @@ $ npm run prettier:fix
 
 ### Development Server
 
-Install the dependencies by running `npm install`. The commands to start the development server is:
+Install the dependencies by running `npm install`. The command to start the development server is:
 
 ```text
 $ npm start
