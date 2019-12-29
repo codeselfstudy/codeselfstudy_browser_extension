@@ -9,7 +9,8 @@
         "serve:chromium": "npx web-ext run -t chromium",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prettier:check": "npx prettier --check \"**/*.{js,css,html}\"",
-        "prettier:fix": "npx prettier --write \"**/*.{js,css,html}\""
+        "prettier:fix": "npx prettier --write \"**/*.{js,css,html}\"",
+        "build": "npx web-ext build"
     },
     "repository": {
         "type": "git",
