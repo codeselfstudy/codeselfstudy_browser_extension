@@ -1,33 +1,33 @@
 # Code Self Study Browser Extension
 
-This browser extension lets you easily share links to the Code Self Study forum with one click. More features coming soon.
+This browser extension lets people easily share links to the Code Self Study forum with a click. It also provides quick links to the group's resources.
+
+More features coming soon.
 
 ## Contributing
 
-Pull requests are welcome, but please check if a feature is needed before adding completely new functionality.
+Pull requests are welcome, but please check if a feature is needed before adding completely new functionality. We can discuss it in the Github issuess and/or forum.
 
 ### Coding Style
 
-Please use prettier.js and follow the code style specified in the `.prettierrc` and `.editorconfig` files. There are editor plugins that with auto-format the code for you.
+Please use prettier.js and follow the code style specified in the `.prettierrc` and `.editorconfig` files. There are editor plugins that with auto-format the code for you, or you can also run this command to format the code manually:
+
+```text
+$ npm run prettier:fix
+```
 
 ### Development Server
 
-You can install `web-ext`:
+Install the dependencies by running `npm install`. The commands to start the development server is:
 
 ```text
-$ npm i -g web-ext
+$ npm start
 ```
 
-To run the extension in development with live reload, type this:
+To test the extension in Chromium, type this:
 
 ```text
-$ web-ext run
-```
-
-To test in Chromium, type this:
-
-```text
-$ web-ext run -t chromium
+$ npm run serve:chromium
 ```
 
 Please note that it doesn't run in Chrome or Chromium yet. If someone wants to work on that, feel free to make a pull request.
