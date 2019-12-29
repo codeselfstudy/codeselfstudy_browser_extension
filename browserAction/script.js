@@ -6,8 +6,6 @@ const links = {
     shareLink: document.getElementById("shareLink"),
 };
 
-console.log(links);
-
 links.shareLink.addEventListener("click", e => {
     browser.tabs
         .query({
@@ -15,13 +13,17 @@ links.shareLink.addEventListener("click", e => {
             active: true,
         })
         .then(sendMessageToTabs)
-        .catch(onError);
+        // I don't think this will log from a background script, but I'm
+        // not sure what to do with it at the moment.
+        .catch(err => console.error(err));
 });
 
 function sendMessageToTabs(tabs) {
     for (let tab of tabs) {
         browser.tabs
-            .sendMessage(tab.id, { greeting: "a message from the background script" })
+            .sendMessage(tab.id, {
+                greeting: "a message from the background script",
+            })
             .then(response => {
                 console.log("Destination URL", response.response);
 
