@@ -1,1 +1,1 @@
-document.getElementById("myHeading").style.color = "red";
+// Add JS for the options page here

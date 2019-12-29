@@ -21,14 +21,15 @@ links.shareLink.addEventListener("click", e => {
 function sendMessageToTabs(tabs) {
     for (let tab of tabs) {
         browser.tabs
-            .sendMessage(tab.id, { greeting: "Hi from background script" })
+            .sendMessage(tab.id, { greeting: "a message from the background script" })
             .then(response => {
-                console.log("X Message from the content script:");
-                console.log("response XX:", response.response);
+                console.log("Destination URL", response.response);
 
                 const creating = browser.tabs.create({
                     url: response.response,
                 });
+
+                // Close the popup or it will stay open on the new tab
                 window.close();
             })
             .catch(err => console.error(err));
