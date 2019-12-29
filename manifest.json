@@ -7,12 +7,12 @@
         "64": "icons/icon.png"
     },
     "background": {
-        "scripts": ["background_script.js"]
+        "scripts": ["vendor/browser-polyfill.js", "background_script.js"]
     },
     "content_scripts": [
         {
             "matches": ["*://*/*"],
-            "js": ["content_script.js"]
+            "js": ["vendor/browser-polyfill.js", "content_script.js"]
         }
     ],
     "browser_action": {
