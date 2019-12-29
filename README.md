@@ -4,6 +4,11 @@ This browser extension lets people easily share links to the Code Self Study for
 
 More features coming soon.
 
+## Install
+
+- [Firefox version](https://addons.mozilla.org/en-US/firefox/addon/codeselfstudy/)
+- [Chrome version](https://chrome.google.com/webstore/detail/code-self-study/mejalgpjkfdfpemlljeomjdefolbikch?hl=en)
+
 ## Contributing
 
 Pull requests are welcome, but please check if a feature is needed before adding completely new functionality. We can discuss it in the Github issuess and/or forum.
