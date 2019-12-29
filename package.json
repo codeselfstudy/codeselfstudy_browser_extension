@@ -1,16 +1,16 @@
 {
     "name": "@codeselfstudy/codeselfstudy_browser_extension",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "description": "A browser extension for Code Self Study",
     "main": "background_script.js",
     "scripts": {
-        "start": "npx web-ext run",
-        "serve:firefox": "npx web-ext run",
-        "serve:chromium": "npx web-ext run -t chromium",
+        "start": "npx web-ext run -i \"tags\"",
+        "serve:firefox": "npx web-ext run -i \"tags\"",
+        "serve:chromium": "npx web-ext run -t chromium -i \"tags\"",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prettier:check": "npx prettier --check \"**/*.{js,css,html}\"",
         "prettier:fix": "npx prettier --write \"**/*.{js,css,html}\"",
-        "build": "npx web-ext build"
+        "build": "npx web-ext build -i \"tags\""
     },
     "repository": {
         "type": "git",
