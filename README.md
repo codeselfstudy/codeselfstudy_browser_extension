@@ -30,9 +30,8 @@ To test the extension in Chromium, type this:
 $ npm run serve:chromium
 ```
 
-Please note that it doesn't run in Chrome or Chromium yet. If someone wants to work on that, feel free to make a pull request.
-
 Here is more information:
 
 - [`web-ext` documentation](https://github.com/mozilla/web-ext)
 - [documentation for browser extensions](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions).
+- [build a cross-browser extension](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Build_a_cross_browser_extension) (the polyfill is in the `vendor` directory)
