@@ -1,8 +1,9 @@
 {
     "manifest_version": 2,
-    "name": "codeselfstudy",
+    "name": "Code Self Study",
+    "short_name": "codeselfstudy",
     "description": "A browser extension for Code Self Study (codeselfstudy.com)",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "icons": {
         "64": "icons/icon.png"
     },
