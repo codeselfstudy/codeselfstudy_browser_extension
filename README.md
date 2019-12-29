@@ -40,3 +40,7 @@ Here is more information:
 - [`web-ext` documentation](https://github.com/mozilla/web-ext)
 - [documentation for browser extensions](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions).
 - [build a cross-browser extension](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Build_a_cross_browser_extension) (the polyfill is in the `vendor` directory)
+
+### Versions
+
+At the moment, the version information is in `package.json` and `manifest.json`.
