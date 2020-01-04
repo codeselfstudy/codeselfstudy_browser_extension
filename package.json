@@ -10,7 +10,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "prettier:check": "npx prettier --check \"**/*.{js,css,html}\"",
         "prettier:fix": "npx prettier --write \"**/*.{js,css,html}\"",
-        "build": "npx web-ext build -i \"tags\""
+        "build": "make clean && npx web-ext build -i \"tags\""
     },
     "repository": {
         "type": "git",
