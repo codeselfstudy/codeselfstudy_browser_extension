@@ -4,9 +4,11 @@ const NEW_TOPIC_URL = `${DISCOURSE_BASE_URL}/new-topic`;
 
 browser.runtime.onMessage.addListener(request => {
     const title = document.title.split("|")[0].trim();
-    const body = getSelectionText();
+    const url = window.location.href;
+    const body = `${getSelectionText()}\n\n${url}`;
     console.log("title:", title);
     console.log("body:", body);
+    console.log("url", url);
     return Promise.resolve({ response: generateSharingUrl(title, body) });
 });
 
@@ -36,9 +38,19 @@ function generateSharingUrl(
  */
 function getSelectionText() {
     if (window.getSelection) {
-        return window.getSelection().toString();
+        return toMarkdownQuote(window.getSelection().toString());
     } else if (document.selection && document.selection.type != "Control") {
-        return document.selection.createRange().text;
+        return toMarkdownQuote(document.selection.createRange().text);
     }
     return "";
+}
+
+/**
+ * Take a string and format it as a markdown blockquote.
+ */
+function toMarkdownQuote(text) {
+    return text
+        .split("\n")
+        .map(line => `> ${line}`)
+        .join("\n");
 }

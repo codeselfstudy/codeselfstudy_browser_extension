@@ -61,7 +61,7 @@ function showCodes(codes) {
             return `<tr><td>${pair[0]}</td><td>${pair[1]}</tr>`;
         })
         .join("\n");
-    // alert(rows)
+
     els.codesOutput.innerHTML = `
         <table>
             <thead>
