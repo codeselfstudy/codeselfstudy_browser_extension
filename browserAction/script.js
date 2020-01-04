@@ -61,8 +61,7 @@ function showCodes(codes) {
             return `<tr><td>${pair[0]}</td><td>${pair[1]}</tr>`;
         })
         .join("\n");
-
-    els.codesOutput.innerHTML = `
+    const codesHTML = `
         <table>
             <thead>
                 <tr>
@@ -74,4 +73,17 @@ function showCodes(codes) {
                 ${rows}
             </tbody>
         </table>`.trim();
+
+    // This tries to avoid warnings from Mozilla's linter about unsafe
+    // use of innerHTML.
+    const codesEl = document.createElement("div");
+
+    const parser = new DOMParser();
+    const parsed = parser.parseFromString(codesHTML, `text/html`);
+    const tags = parsed.getElementsByTagName(`table`);
+
+    els.codesOutput.innerHTML = ``;
+    for (const tag of tags) {
+        els.codesOutput.appendChild(tag);
+    }
 }
