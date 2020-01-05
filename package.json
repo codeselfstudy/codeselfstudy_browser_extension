@@ -1,6 +1,6 @@
 {
     "name": "@codeselfstudy/codeselfstudy_browser_extension",
-    "version": "0.8.1",
+    "version": "0.8.3",
     "description": "A browser extension for Code Self Study",
     "main": "background_script.js",
     "scripts": {
