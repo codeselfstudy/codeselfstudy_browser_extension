@@ -9,17 +9,17 @@
     },
     "permissions": ["*://*.codeselfstudy.com/*", "activeTab"],
     "background": {
-        "scripts": ["vendor/browser-polyfill.js", "background_script.js"]
+        "scripts": ["assets/vendor/browser-polyfill.js", "assets/js/background_script.js"]
     },
     "content_scripts": [
         {
             "matches": ["*://*/*"],
-            "js": ["vendor/browser-polyfill.js", "content_script.js"]
+            "js": ["assets/vendor/browser-polyfill.js", "assets/js/content_script.js"]
         }
     ],
     "browser_action": {
         "default_icon": {
-            "64": "icons/icon.png"
+            "64": "assets/icons/icon.png"
         },
         "default_popup": "browserAction/index.html",
         "default_title": "Code Self Study"
