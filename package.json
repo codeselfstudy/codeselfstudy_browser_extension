@@ -10,7 +10,11 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "prettier:check": "npx prettier --check \"**/*.{js,css,html}\"",
         "prettier:fix": "npx prettier --write \"**/*.{js,css,html}\"",
-        "build": "make clean && npx web-ext build -i \"tags\""
+        "build": "make clean && npx web-ext build -i \"tags\"",
+        "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "repository": {
         "type": "git",
@@ -26,6 +30,7 @@
     },
     "homepage": "https://github.com/codeselfstudy/codeselfstudy_browser_extension#readme",
     "devDependencies": {
+        "laravel-mix": "^5.0.1",
         "prettier": "^1.19.1",
         "web-ext": "^4.0.0"
     }
