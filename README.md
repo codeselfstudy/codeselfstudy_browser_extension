@@ -13,6 +13,10 @@ More features coming soon.
 
 Pull requests are welcome, but please check if a feature is needed before adding completely new functionality. We can discuss it in the Github issuess and/or forum.
 
+### Overview
+
+This project now uses React. It's compiled with TypeScript and the files have TypeScript extensions, but we aren't using many TypeScript features at the moment. Let's avoid complex TypeScript in order to keep things easier to understand for people who have only worked with JavaScript.
+
 ### Coding Style
 
 Please use prettier.js and follow the code style specified in the `.prettierrc` and `.editorconfig` files. There are editor plugins that with auto-format the code for you, or you can run this command to format the code manually:
