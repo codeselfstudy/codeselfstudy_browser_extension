@@ -2,3 +2,4 @@ node_modules/
 .git/
 web-ext-artifacts/
 vendor/
+dist/
