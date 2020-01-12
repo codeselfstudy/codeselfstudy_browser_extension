@@ -9,23 +9,13 @@
         "128": "assets/icons/icon-128.png"
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "permissions": [
-        "activeTab",
-        "alarms",
-        "bookmarks",
-        "cookies",
-        "storage",
-        "tabs",
-        "webRequest",
-        "webRequestBlocking",
-        "*://*/*"
-    ],
+    "permissions": ["activeTab", "*://*.codeselfstudy.com/*"],
     "background": {
         "scripts": ["background.js"],
         "persistent": true
     },
     "browser_action": {
-        "default_title": "Web Extension Starter",
+        "default_title": "Code Self Study",
         "default_icon": "assets/icons/icon-48.png",
         "default_popup": "popup.html"
     },
@@ -35,7 +25,7 @@
     },
     "content_scripts": [
         {
-            "js": ["counter.js"],
+            "js": ["counter.js", "dashboard.js"],
             "matches": ["*://*/*"]
         }
     ]
