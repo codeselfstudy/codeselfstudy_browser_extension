@@ -2,18 +2,18 @@ import * as React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { Store } from "webext-redux";
-import CounterApp from "./containers/CounterApp";
+import DashboardApp from "./containers/DashboardApp";
 
 import { createDomAnchor } from "../../scripts/dom";
 
-createDomAnchor("counter-root");
+createDomAnchor("dashboard-root");
 const store = new Store();
 
 store.ready().then(() => {
     ReactDOM.render(
         <Provider store={store}>
-            <CounterApp />
+            <DashboardApp />
         </Provider>,
-        document.getElementById("counter-root")
+        document.getElementById("dashboard-root")
     );
 });
