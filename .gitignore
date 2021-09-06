@@ -5,6 +5,7 @@ tags.*
 .idea/
 .vscode/
 *.sw[op]
+*.bak
 
 # Python
 *.py[cod]
