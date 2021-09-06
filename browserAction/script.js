@@ -8,13 +8,13 @@ const els = {
     codesOutput: document.getElementById("codesOutput"),
 };
 
-els.codesLink.addEventListener("click", e => {
+els.codesLink.addEventListener("click", (e) => {
     fetchCodes().then(({ codes }) => {
         showCodes(codes);
     });
 });
 
-els.shareLink.addEventListener("click", e => {
+els.shareLink.addEventListener("click", (e) => {
     browser.tabs
         .query({
             currentWindow: true,
@@ -23,7 +23,7 @@ els.shareLink.addEventListener("click", e => {
         .then(sendMessageToTabs)
         // I don't think this will log from a background script, but I'm
         // not sure what to do with it at the moment.
-        .catch(err => console.error(err));
+        .catch((err) => console.error(err));
 });
 
 function sendMessageToTabs(tabs) {
@@ -32,7 +32,7 @@ function sendMessageToTabs(tabs) {
             .sendMessage(tab.id, {
                 greeting: "a message from the background script",
             })
-            .then(response => {
+            .then((response) => {
                 console.log("Destination URL", response.response);
 
                 const creating = browser.tabs.create({
@@ -42,7 +42,7 @@ function sendMessageToTabs(tabs) {
                 // Close the popup or it will stay open on the new tab
                 window.close();
             })
-            .catch(err => console.error(err));
+            .catch((err) => console.error(err));
     }
 }
 
@@ -51,13 +51,13 @@ function sendMessageToTabs(tabs) {
  */
 function fetchCodes() {
     const url = "https://browser.codeselfstudy.com/api/codes.json";
-    return fetch(url).then(res => res.json());
+    return fetch(url).then((res) => res.json());
 }
 
 function showCodes(codes) {
     const pairs = Object.entries(codes);
     const rows = pairs
-        .map(pair => {
+        .map((pair) => {
             return `<tr><td>${pair[0]}</td><td>${pair[1]}</tr>`;
         })
         .join("\n");

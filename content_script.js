@@ -2,7 +2,7 @@
 const DISCOURSE_BASE_URL = "https://forum.codeselfstudy.com";
 const NEW_TOPIC_URL = `${DISCOURSE_BASE_URL}/new-topic`;
 
-browser.runtime.onMessage.addListener(request => {
+browser.runtime.onMessage.addListener((request) => {
     const title = document.title.split("|")[0].trim();
     const url = window.location.href;
     const body = `${getSelectionText()}\n\n${url}`;
@@ -51,6 +51,6 @@ function getSelectionText() {
 function toMarkdownQuote(text) {
     return text
         .split("\n")
-        .map(line => `> ${line}`)
+        .map((line) => `> ${line}`)
         .join("\n");
 }
