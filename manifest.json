@@ -9,12 +9,12 @@
     },
     "permissions": ["*://*.codeselfstudy.com/*", "activeTab"],
     "background": {
-        "scripts": ["vendor/browser-polyfill.js", "background_script.js"]
+        "scripts": ["vendor/browser-polyfill-0.8.0.js", "background_script.js"]
     },
     "content_scripts": [
         {
             "matches": ["*://*/*"],
-            "js": ["vendor/browser-polyfill.js", "content_script.js"]
+            "js": ["vendor/browser-polyfill-0.8.0.js", "content_script.js"]
         }
     ],
     "browser_action": {

@@ -4,15 +4,15 @@
 // An object that contains references to the elements in the browser action menu
 const els = {
     shareLink: document.getElementById("shareLink"),
-    codesLink: document.getElementById("codesLink"),
+    // codesLink: document.getElementById("codesLink"),
     codesOutput: document.getElementById("codesOutput"),
 };
 
-els.codesLink.addEventListener("click", (e) => {
-    fetchCodes().then(({ codes }) => {
-        showCodes(codes);
-    });
-});
+// els.codesLink.addEventListener("click", (e) => {
+//     fetchCodes().then(({ codes }) => {
+//         showCodes(codes);
+//     });
+// });
 
 els.shareLink.addEventListener("click", (e) => {
     browser.tabs
