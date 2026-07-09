@@ -13,14 +13,6 @@ More features coming soon.
 
 Pull requests are welcome, but please check if a feature is needed before adding completely new functionality. We can discuss it in the Github issuess and/or forum.
 
-### Coding Style
-
-Please use prettier.js and follow the code style specified in the `.prettierrc` and `.editorconfig` files. There are editor plugins that with auto-format the code for you, or you can run this command to format the code manually:
-
-```text
-$ npm run prettier:fix
-```
-
 ### Development Server
 
 Install the dependencies by running `npm install`. The command to start the development server is:
