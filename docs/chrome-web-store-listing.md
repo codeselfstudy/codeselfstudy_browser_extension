@@ -4,6 +4,8 @@ Copy-paste source for the **Privacy practices** tab of the Chrome Web Store item
 
 Keep this file in sync with `manifest.json` whenever permissions change.
 
+**Privacy policy URL** (paste into the Privacy practices tab, and the Firefox/AMO privacy-policy field): `https://github.com/codeselfstudy/codeselfstudy_browser_extension/blob/master/PRIVACY.md`
+
 ---
 
 ## Single purpose description
