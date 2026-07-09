@@ -9,11 +9,7 @@ import {
 
 // Runtime files that make up the shipped extension. Anything not listed here
 // (screenshots/, scripts/, package.json, README, ...) is excluded from the package.
-const ASSET_FILES = [
-  "content_script.js",
-  "background_script.js",
-  "favicon.ico",
-];
+const ASSET_FILES = ["background_script.js", "favicon.ico"];
 const ASSET_DIRS = ["icons", "fonts", "vendor", "browserAction", "options"];
 
 export type Target = "chrome" | "firefox";

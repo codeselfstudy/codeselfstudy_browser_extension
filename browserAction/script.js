@@ -1,89 +1,89 @@
 // See https://meta.discourse.org/t/compose-a-new-pre-filled-topic-via-url/28074
 // http://discourse.example.com/new-topic?title=topic%20title&body=topic%20body&category=category/subcategory&tags=email,planned
 
+const DISCOURSE_BASE_URL = "https://forum.codeselfstudy.com";
+const NEW_TOPIC_URL = `${DISCOURSE_BASE_URL}/new-topic`;
+
 // An object that contains references to the elements in the browser action menu
 const els = {
   shareLink: document.getElementById("shareLink"),
-  // codesLink: document.getElementById("codesLink"),
-  codesOutput: document.getElementById("codesOutput"),
 };
 
-// els.codesLink.addEventListener("click", (e) => {
-//     fetchCodes().then(({ codes }) => {
-//         showCodes(codes);
-//     });
-// });
-
-els.shareLink.addEventListener("click", (e) => {
-  browser.tabs
-    .query({
-      currentWindow: true,
-      active: true,
-    })
-    .then(sendMessageToTabs)
-    // I don't think this will log from a background script, but I'm
-    // not sure what to do with it at the moment.
-    .catch((err) => console.error(err));
+els.shareLink.addEventListener("click", () => {
+  shareCurrentTab().catch((err) => console.error(err));
 });
 
-function sendMessageToTabs(tabs) {
-  for (let tab of tabs) {
-    browser.tabs
-      .sendMessage(tab.id, {
-        greeting: "a message from the background script",
-      })
-      .then((response) => {
-        console.log("Destination URL", response.response);
-
-        const creating = browser.tabs.create({
-          url: response.response,
-        });
-
-        // Close the popup or it will stay open on the new tab
-        window.close();
-      })
-      .catch((err) => console.error(err));
+/**
+ * Read the active tab (via activeTab + scripting), build a pre-filled
+ * Discourse "new topic" URL from its title/URL/selection, and open it.
+ */
+async function shareCurrentTab() {
+  const [tab] = await browser.tabs.query({
+    currentWindow: true,
+    active: true,
+  });
+  if (!tab) {
+    return;
   }
+
+  const [injection] = await browser.scripting.executeScript({
+    target: { tabId: tab.id },
+    func: readPageInfo,
+  });
+  const page = injection && injection.result;
+  if (!page) {
+    return;
+  }
+
+  const title = page.title.split("|")[0].trim();
+  const body = `${toMarkdownQuote(page.selection)}\n\n${page.url}`;
+
+  await browser.tabs.create({ url: generateSharingUrl(title, body) });
+
+  // Close the popup or it will stay open on the new tab.
+  window.close();
 }
 
 /**
- * Fetch the JSON and return it in a promise.
+ * Runs in the context of the shared page (injected via scripting.executeScript),
+ * so it can only use the DOM, not the extension's APIs. Returns the raw fields
+ * needed to build the forum post.
  */
-function fetchCodes() {
-  const url = "https://browser.codeselfstudy.com/api/codes.json";
-  return fetch(url).then((res) => res.json());
+function readPageInfo() {
+  return {
+    title: document.title,
+    url: window.location.href,
+    selection: window.getSelection ? window.getSelection().toString() : "",
+  };
 }
 
-function showCodes(codes) {
-  const pairs = Object.entries(codes);
-  const rows = pairs
-    .map((pair) => {
-      return `<tr><td>${pair[0]}</td><td>${pair[1]}</tr>`;
-    })
+/**
+ * Generate a URL that creates a post draft in Discourse with pre-filled information.
+ */
+function generateSharingUrl(
+  title,
+  body,
+  category = "general-discussion",
+  tagsArr = []
+) {
+  const tags = tagsArr.join(",");
+  const params = new URLSearchParams({
+    title,
+    body,
+    category,
+    tags,
+  }).toString();
+
+  // This URL will create a post draft
+  return `${NEW_TOPIC_URL}/?${params}`;
+}
+
+/**
+ * Take a string and format it as a markdown blockquote.
+ */
+function toMarkdownQuote(text) {
+  return text
+    .split("\n")
+    .map((line) => `> ${line}`)
     .join("\n");
-  const codesHTML = `
-        <table>
-            <thead>
-                <tr>
-                    <th>resource</th>
-                    <th>code</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${rows}
-            </tbody>
-        </table>`.trim();
-
-  // This tries to avoid warnings from Mozilla's linter about unsafe
-  // use of innerHTML.
-  const codesEl = document.createElement("div");
-
-  const parser = new DOMParser();
-  const parsed = parser.parseFromString(codesHTML, `text/html`);
-  const tags = parsed.getElementsByTagName(`table`);
-
-  els.codesOutput.innerHTML = ``;
-  for (const tag of tags) {
-    els.codesOutput.appendChild(tag);
-  }
 }

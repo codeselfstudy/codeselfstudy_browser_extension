@@ -57,7 +57,6 @@ describe("run / stage", () => {
     expect(firefox.browser_specific_settings.gecko.id).toBeTruthy();
 
     for (const rel of [
-      "content_script.js",
       "browserAction/index.html",
       "vendor/browser-polyfill.js",
       "icons/icon.png",

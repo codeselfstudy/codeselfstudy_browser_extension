@@ -6,8 +6,6 @@ import {
   toFirefoxManifest,
 } from "./manifest.ts";
 
-const HOST_PATTERN = "*://*.codeselfstudy.com/*";
-
 describe("toChromeManifest", () => {
   test("produces a valid MV3 Chrome manifest", () => {
     const m = toChromeManifest(base as Manifest);
@@ -17,9 +15,8 @@ describe("toChromeManifest", () => {
     expect(m.background?.service_worker).toBe("background_script.js");
     expect(m.background?.scripts).toBeUndefined();
     expect(m.browser_specific_settings).toBeUndefined();
-    expect(m.host_permissions).toContain(HOST_PATTERN);
-    expect(m.permissions).toContain("activeTab");
-    expect(m.permissions).not.toContain(HOST_PATTERN);
+    expect(m.permissions).toEqual(["activeTab", "scripting"]);
+    expect(m.host_permissions).toBeUndefined();
   });
 
   test("does not mutate the input", () => {
@@ -66,9 +63,9 @@ describe("canonical root manifest", () => {
     expect(m.background?.scripts).toBeDefined();
   });
 
-  test("splits host pattern into host_permissions", () => {
-    expect(m.permissions).toEqual(["activeTab"]);
-    expect(m.host_permissions).toEqual([HOST_PATTERN]);
+  test("declares only activeTab + scripting, no host permissions", () => {
+    expect(m.permissions).toEqual(["activeTab", "scripting"]);
+    expect(m.host_permissions).toBeUndefined();
   });
 
   test("uses the MV3 action key", () => {
