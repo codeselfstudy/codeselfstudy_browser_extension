@@ -7,7 +7,6 @@ applyStoredTheme();
 
 const controls = {
   theme: document.getElementById("theme"),
-  category: document.getElementById("category"),
   quote: document.getElementById("quote"),
   newTab: document.getElementById("newTab"),
   version: document.getElementById("version"),
@@ -16,7 +15,6 @@ const controls = {
 // Reflect the saved settings in the form.
 const settings = readSettings();
 controls.theme.value = settings.theme;
-controls.category.value = settings.category;
 controls.quote.checked = settings.quote;
 controls.newTab.checked = settings.newTab;
 
@@ -30,9 +28,6 @@ try {
 controls.theme.addEventListener("change", () => {
   saveSettings({ theme: controls.theme.value });
   applyStoredTheme();
-});
-controls.category.addEventListener("change", () => {
-  saveSettings({ category: controls.category.value });
 });
 controls.quote.addEventListener("change", () => {
   saveSettings({ quote: controls.quote.checked });
@@ -57,10 +52,6 @@ function readSettings() {
       stored.theme === "light" || stored.theme === "dark"
         ? stored.theme
         : "system",
-    category:
-      typeof stored.category === "string" && stored.category
-        ? stored.category
-        : "general-discussion",
     quote: stored.quote !== false,
     newTab: stored.newTab !== false,
   };

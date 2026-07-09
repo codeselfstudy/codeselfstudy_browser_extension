@@ -34,7 +34,8 @@ els.shareLink.addEventListener("click", () => {
 /**
  * Read the active tab (via activeTab + scripting), build a pre-filled
  * Discourse "new topic" URL from its title/URL/selection, and open it
- * according to the saved settings.
+ * according to the saved settings. The category is always the default
+ * "general-discussion"; the user can change it in Discourse before posting.
  */
 async function shareCurrentTab(settings) {
   const [tab] = await browser.tabs.query({
@@ -60,7 +61,7 @@ async function shareCurrentTab(settings) {
     settings.quote && selection
       ? `${toMarkdownQuote(page.selection)}\n\n${page.url}`
       : page.url;
-  const url = generateSharingUrl(title, body, settings.category);
+  const url = generateSharingUrl(title, body);
 
   if (settings.newTab) {
     await browser.tabs.create({ url });
@@ -133,10 +134,6 @@ function readSettings() {
       stored.theme === "light" || stored.theme === "dark"
         ? stored.theme
         : "system",
-    category:
-      typeof stored.category === "string" && stored.category
-        ? stored.category
-        : "general-discussion",
     quote: stored.quote !== false,
     newTab: stored.newTab !== false,
   };
