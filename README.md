@@ -6,8 +6,8 @@ More features coming soon.
 
 ## Install
 
-- [Firefox version](https://addons.mozilla.org/en-US/firefox/addon/codeselfstudy/)
 - [Chrome version](https://chrome.google.com/webstore/detail/code-self-study/mejalgpjkfdfpemlljeomjdefolbikch?hl=en)
+- Firefox version -- this version is offline at the moment. If anyone wants to help get it online again, open an issue.
 
 ## Contributing
 
