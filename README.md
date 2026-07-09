@@ -18,22 +18,32 @@ Pull requests are welcome, but please check if a feature is needed before adding
 Please use prettier.js and follow the code style specified in the `.prettierrc` and `.editorconfig` files. There are editor plugins that with auto-format the code for you, or you can run this command to format the code manually:
 
 ```text
-$ npm run prettier:fix
+$ bun run format
 ```
 
 ### Development Server
 
-Install the dependencies by running `npm install`. The command to start the development server is:
+Install the dependencies by running `bun install`. The command to start the development server is:
 
 ```text
-$ npm start
+$ bun start
 ```
 
 To test the extension in Chromium, type this:
 
 ```text
-$ npm run serve:chromium
+$ bun run serve:chromium
 ```
+
+### Building
+
+The extension targets Manifest V3 and builds a separate package for each browser from the single root `manifest.json`. To build both, run:
+
+```text
+$ just build
+```
+
+This stages `dist/chrome/` and `dist/firefox/` and writes the packaged zips to `web-ext-artifacts/chrome/` and `web-ext-artifacts/firefox/`. Other useful recipes: `just dev_firefox` / `just dev_chrome` (live-reloading dev browser), `just lint` (Firefox add-on linter), and `just test` (test suite).
 
 Here is more information:
 

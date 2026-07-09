@@ -9,6 +9,7 @@
 
 dist/
 build/
+web-ext-artifacts/
 .astro/
 
 .cache/

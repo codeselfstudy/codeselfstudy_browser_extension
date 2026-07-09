@@ -7,9 +7,9 @@
     "start": "bun web-ext run -i \"tags\"",
     "serve:firefox": "bun web-ext run -i \"tags\"",
     "serve:chromium": "bun web-ext run -t chromium -i \"tags\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "bun test",
     "format": "prettier --write '**/*.{md,mdx,ts,js,mjs,cjs,jsx,tsx,yaml,yml,json,html,css,scss,vue,astro}'",
-    "build": "make clean && bun web-ext build -i \"tags\""
+    "build": "just build"
   },
   "repository": {
     "type": "git",
