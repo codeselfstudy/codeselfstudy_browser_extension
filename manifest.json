@@ -3,7 +3,7 @@
   "name": "Code Self Study",
   "short_name": "codeselfstudy",
   "description": "A browser extension for Code Self Study (codeselfstudy.com)",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "icons": {
     "64": "icons/icon.png"
   },
@@ -11,12 +11,12 @@
   "host_permissions": ["*://*.codeselfstudy.com/*"],
   "background": {
     "service_worker": "background_script.js",
-    "scripts": ["vendor/browser-polyfill.min.js", "background_script.js"]
+    "scripts": ["vendor/browser-polyfill.js", "background_script.js"]
   },
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["vendor/browser-polyfill.min.js", "content_script.js"]
+      "js": ["vendor/browser-polyfill.js", "content_script.js"]
     }
   ],
   "action": {

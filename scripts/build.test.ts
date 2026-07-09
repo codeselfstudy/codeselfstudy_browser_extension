@@ -59,7 +59,7 @@ describe("run / stage", () => {
     for (const rel of [
       "content_script.js",
       "browserAction/index.html",
-      "vendor/browser-polyfill.min.js",
+      "vendor/browser-polyfill.js",
       "icons/icon.png",
       "fonts/Inconsolata-Regular.ttf",
     ]) {

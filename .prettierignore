@@ -6,6 +6,7 @@ build/
 # developer tools
 .git/
 node_modules/
+vendor/
 __pycache__/
 .vim/
 .idea/
