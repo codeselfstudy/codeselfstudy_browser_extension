@@ -7,18 +7,11 @@
   "icons": {
     "64": "icons/icon.png"
   },
-  "permissions": ["activeTab"],
-  "host_permissions": ["*://*.codeselfstudy.com/*"],
+  "permissions": ["activeTab", "scripting"],
   "background": {
     "service_worker": "background_script.js",
     "scripts": ["vendor/browser-polyfill.js", "background_script.js"]
   },
-  "content_scripts": [
-    {
-      "matches": ["*://*/*"],
-      "js": ["vendor/browser-polyfill.js", "content_script.js"]
-    }
-  ],
   "action": {
     "default_icon": {
       "64": "icons/icon.png"
