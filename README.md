@@ -6,20 +6,12 @@ More features coming soon.
 
 ## Install
 
-- [Firefox version](https://addons.mozilla.org/en-US/firefox/addon/codeselfstudy/)
 - [Chrome version](https://chrome.google.com/webstore/detail/code-self-study/mejalgpjkfdfpemlljeomjdefolbikch?hl=en)
+- Firefox version -- this version is offline at the moment. If anyone wants to help get it online again, open an issue.
 
 ## Contributing
 
 Pull requests are welcome, but please check if a feature is needed before adding completely new functionality. We can discuss it in the Github issuess and/or forum.
-
-### Coding Style
-
-Please use prettier.js and follow the code style specified in the `.prettierrc` and `.editorconfig` files. There are editor plugins that with auto-format the code for you, or you can run this command to format the code manually:
-
-```text
-$ bun run format
-```
 
 ### Development Server
 
