@@ -4,6 +4,8 @@ NEVER commit code that contains AI agent attribution. Do NOT add the agent name 
 
 Default to using Bun instead of Node.js. That means use commands like `bunx` instead of `npx`.
 
+Use `kebab-case` for file and directory names. Use `UpperCamelCase` for component filenames (if using React). Use `snake_case` for non-frontend languages (e.g., Python, Bash).
+
 Write tests for all code.
 
 The task runner is [just](https://github.com/casey/just). `just` script names should be written in `snake_case`.
