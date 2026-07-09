@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Code Self Study",
   "short_name": "codeselfstudy",
   "description": "A browser extension for Code Self Study (codeselfstudy.com)",
@@ -7,17 +7,19 @@
   "icons": {
     "64": "icons/icon.png"
   },
-  "permissions": ["*://*.codeselfstudy.com/*", "activeTab"],
+  "permissions": ["activeTab"],
+  "host_permissions": ["*://*.codeselfstudy.com/*"],
   "background": {
-    "scripts": ["vendor/browser-polyfill-0.8.0.js", "background_script.js"]
+    "service_worker": "background_script.js",
+    "scripts": ["vendor/browser-polyfill.min.js", "background_script.js"]
   },
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["vendor/browser-polyfill-0.8.0.js", "content_script.js"]
+      "js": ["vendor/browser-polyfill.min.js", "content_script.js"]
     }
   ],
-  "browser_action": {
+  "action": {
     "default_icon": {
       "64": "icons/icon.png"
     },
@@ -26,5 +28,13 @@
   },
   "options_ui": {
     "page": "options/index.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{9d7aa7b3-8214-40b4-96d2-a10154debdca}",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
   }
 }

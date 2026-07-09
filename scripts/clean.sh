@@ -9,6 +9,7 @@ set -euo pipefail
 rm -rf .astro
 rm -rf tmp-*
 rm -rf dist
+rm -rf web-ext-artifacts
 
 # node_modules cache
 rm -rf ./node_modules/.cache/prettier/.prettier-cache
