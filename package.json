@@ -1,33 +1,34 @@
 {
-    "name": "@codeselfstudy/codeselfstudy_browser_extension",
-    "version": "0.9.1",
-    "description": "A browser extension for Code Self Study",
-    "main": "background_script.js",
-    "scripts": {
-        "start": "npx web-ext run -i \"tags\"",
-        "serve:firefox": "npx web-ext run -i \"tags\"",
-        "serve:chromium": "npx web-ext run -t chromium -i \"tags\"",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "prettier:check": "npx prettier --check \"**/*.{js,css,html}\"",
-        "prettier:fix": "npx prettier --write \"**/*.{js,css,html}\"",
-        "build": "make clean && npx web-ext build -i \"tags\""
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/codeselfstudy/codeselfstudy_browser_extension.git"
-    },
-    "keywords": [
-        "codeselfstudy"
-    ],
-    "author": "J. Cohen",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/codeselfstudy/codeselfstudy_browser_extension/issues"
-    },
-    "homepage": "https://github.com/codeselfstudy/codeselfstudy_browser_extension#readme",
-    "devDependencies": {
-        "prettier": "^2.3.2",
-        "web-ext": "^6.3.0",
-        "webextension-polyfill": "^0.8.0"
-    }
+  "name": "@codeselfstudy/codeselfstudy_browser_extension",
+  "version": "0.9.1",
+  "description": "A browser extension for Code Self Study",
+  "main": "background_script.js",
+  "scripts": {
+    "start": "bun web-ext run -i \"tags\"",
+    "serve:firefox": "bun web-ext run -i \"tags\"",
+    "serve:chromium": "bun web-ext run -t chromium -i \"tags\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.{md,mdx,ts,js,mjs,cjs,jsx,tsx,yaml,yml,json,html,css,scss,vue,astro}'",
+    "build": "make clean && bun web-ext build -i \"tags\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeselfstudy/codeselfstudy_browser_extension.git"
+  },
+  "keywords": [
+    "codeselfstudy"
+  ],
+  "author": "J. Cohen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codeselfstudy/codeselfstudy_browser_extension/issues"
+  },
+  "homepage": "https://github.com/codeselfstudy/codeselfstudy_browser_extension#readme",
+  "devDependencies": {
+    "@types/bun": "1.3.14",
+    "prettier": "3.9.4",
+    "prettier-plugin-tailwindcss": "0.8.0",
+    "web-ext": "10.4.0",
+    "webextension-polyfill": "0.12.0"
+  }
 }

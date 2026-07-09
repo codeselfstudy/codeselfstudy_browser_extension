@@ -1,30 +1,30 @@
 {
-    "manifest_version": 2,
-    "name": "Code Self Study",
-    "short_name": "codeselfstudy",
-    "description": "A browser extension for Code Self Study (codeselfstudy.com)",
-    "version": "0.9.1",
-    "icons": {
-        "64": "icons/icon.png"
-    },
-    "permissions": ["*://*.codeselfstudy.com/*", "activeTab"],
-    "background": {
-        "scripts": ["vendor/browser-polyfill-0.8.0.js", "background_script.js"]
-    },
-    "content_scripts": [
-        {
-            "matches": ["*://*/*"],
-            "js": ["vendor/browser-polyfill-0.8.0.js", "content_script.js"]
-        }
-    ],
-    "browser_action": {
-        "default_icon": {
-            "64": "icons/icon.png"
-        },
-        "default_popup": "browserAction/index.html",
-        "default_title": "Code Self Study"
-    },
-    "options_ui": {
-        "page": "options/index.html"
+  "manifest_version": 2,
+  "name": "Code Self Study",
+  "short_name": "codeselfstudy",
+  "description": "A browser extension for Code Self Study (codeselfstudy.com)",
+  "version": "0.9.1",
+  "icons": {
+    "64": "icons/icon.png"
+  },
+  "permissions": ["*://*.codeselfstudy.com/*", "activeTab"],
+  "background": {
+    "scripts": ["vendor/browser-polyfill-0.8.0.js", "background_script.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["vendor/browser-polyfill-0.8.0.js", "content_script.js"]
     }
+  ],
+  "browser_action": {
+    "default_icon": {
+      "64": "icons/icon.png"
+    },
+    "default_popup": "browserAction/index.html",
+    "default_title": "Code Self Study"
+  },
+  "options_ui": {
+    "page": "options/index.html"
+  }
 }
