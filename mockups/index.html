@@ -1,0 +1,164 @@
+<!doctype html>
+<!--
+  MOCKUP GALLERY — Code Self Study extension UI.
+  Links are the contract; iframe previews are best-effort (file:// rules vary).
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Code Self Study — design mockups</title>
+    <style>
+      :root {
+        --bg: #f5f6f8;
+        --surface: #ffffff;
+        --text: #16181d;
+        --muted: #5c6470;
+        --border: #e2e5ea;
+        --accent: #2563eb;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #111317;
+          --surface: #1a1d23;
+          --text: #e7e9ee;
+          --muted: #9aa1ad;
+          --border: #2a2e36;
+          --accent: #6ea8fe;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          15px/1.5 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px 20px 64px;
+      }
+      h1 {
+        font-size: 22px;
+        margin: 0 0 4px;
+      }
+      p.lead {
+        margin: 0 0 28px;
+        color: var(--muted);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .card .preview {
+        height: 200px;
+        overflow: hidden;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg);
+      }
+      .card .preview iframe {
+        width: 400%;
+        height: 800px;
+        border: 0;
+        transform: scale(0.25);
+        transform-origin: top left;
+        pointer-events: none;
+      }
+      .card .meta {
+        padding: 14px 16px 16px;
+      }
+      .card h2 {
+        font-size: 16px;
+        margin: 0 0 4px;
+      }
+      .card h2 a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .card h2 a:hover {
+        text-decoration: underline;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Code Self Study — design mockups</h1>
+      <p class="lead">
+        Three directions for the extension's toolbar popup and options page.
+        Open a mockup and use its design panel to explore modes, palettes,
+        fonts, radius, and density.
+      </p>
+      <div class="grid">
+        <article class="card">
+          <div class="preview">
+            <iframe
+              src="01-saas.html"
+              title="Modern SaaS preview"
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="meta">
+            <h2><a href="01-saas.html">01 · Modern SaaS</a></h2>
+            <p>
+              Clean product UI — rounded cards, a soft accent action, light +
+              dark.
+            </p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="preview">
+            <iframe
+              src="02-terminal.html"
+              title="Terminal preview"
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="meta">
+            <h2><a href="02-terminal.html">02 · Terminal</a></h2>
+            <p>
+              Developer-console feel — monospace, window chrome, command-style
+              actions, CRT scanline.
+            </p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="preview">
+            <iframe
+              src="03-brutalist.html"
+              title="Brutalist preview"
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="meta">
+            <h2><a href="03-brutalist.html">03 · Brutalist (muted)</a></h2>
+            <p>
+              Raw structural blocks — heavy ink borders, hard offset shadows, a
+              muted palette.
+            </p>
+          </div>
+        </article>
+      </div>
+    </main>
+  </body>
+</html>

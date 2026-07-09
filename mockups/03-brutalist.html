@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-palette="concrete" data-font="grotesk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>03 · Brutalist — Code Self Study mockup</title>
+    <style>
+      /* ---- Palettes: muted / desaturated, all 7 contract vars, light AND dark.
+             --c-border doubles as the heavy "ink" line color. ---- */
+      [data-palette="concrete"] {
+        --c-bg: #e8e6e1;
+        --c-surface: #f4f2ed;
+        --c-text: #1b1a18;
+        --c-muted: #6d6a63;
+        --c-accent: #3c3936;
+        --c-on-accent: #f4f2ed;
+        --c-border: #1b1a18;
+      }
+      [data-palette="concrete"][data-theme="dark"] {
+        --c-bg: #161513;
+        --c-surface: #1f1e1b;
+        --c-text: #eae7e0;
+        --c-muted: #9a968c;
+        --c-accent: #d6d1c6;
+        --c-on-accent: #161513;
+        --c-border: #eae7e0;
+      }
+      [data-palette="ochre"] {
+        --c-bg: #ece6db;
+        --c-surface: #f6f1e6;
+        --c-text: #241f16;
+        --c-muted: #6f6552;
+        --c-accent: #986713;
+        --c-on-accent: #f6f1e6;
+        --c-border: #241f16;
+      }
+      [data-palette="ochre"][data-theme="dark"] {
+        --c-bg: #16130c;
+        --c-surface: #201c13;
+        --c-text: #ece3d0;
+        --c-muted: #a08f6f;
+        --c-accent: #c99a4a;
+        --c-on-accent: #16130c;
+        --c-border: #ece3d0;
+      }
+      [data-palette="sage"] {
+        --c-bg: #e3e7e1;
+        --c-surface: #eef1ea;
+        --c-text: #1a1f1a;
+        --c-muted: #63705f;
+        --c-accent: #4f6b54;
+        --c-on-accent: #eef1ea;
+        --c-border: #1a1f1a;
+      }
+      [data-palette="sage"][data-theme="dark"] {
+        --c-bg: #11150f;
+        --c-surface: #1a1f16;
+        --c-text: #e0e7dd;
+        --c-muted: #8b9884;
+        --c-accent: #8fae86;
+        --c-on-accent: #11150f;
+        --c-border: #e0e7dd;
+      }
+
+      /* ---- Component CSS: contract variables only ---- */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--c-bg);
+        color: var(--c-text);
+        font-family: var(--font-body);
+        line-height: 1.45;
+      }
+      .stage {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--density) * 34px);
+        align-items: flex-start;
+        justify-content: center;
+        padding: calc(var(--density) * 44px) 24px 130px;
+        max-width: 920px;
+        margin: 0 auto;
+      }
+      .surface {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--density) * 12px);
+      }
+      .surface-label {
+        font-family: var(--font-heading);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--c-text);
+        border-bottom: 3px solid var(--c-border);
+        padding-bottom: 4px;
+      }
+
+      .block {
+        background: var(--c-surface);
+        border: 3px solid var(--c-border);
+        border-radius: var(--radius);
+        box-shadow: calc(var(--density) * 7px) calc(var(--density) * 7px) 0
+          var(--c-border);
+      }
+
+      /* Popup */
+      .popup {
+        width: 320px;
+      }
+      .pop-head {
+        border-bottom: 3px solid var(--c-border);
+        padding: calc(var(--density) * 14px) 16px;
+        background: var(--c-accent);
+        color: var(--c-on-accent);
+      }
+      .pop-head h1 {
+        font-family: var(--font-heading);
+        margin: 0;
+        font-size: 21px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        line-height: 0.98;
+      }
+      .pop-head p {
+        margin: 5px 0 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        opacity: 0.85;
+      }
+      .pop-body {
+        padding: calc(var(--density) * 16px);
+        display: grid;
+        gap: calc(var(--density) * 12px);
+      }
+      .big-btn {
+        width: 100%;
+        cursor: pointer;
+        font-family: var(--font-heading);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        font-size: 15px;
+        color: var(--c-on-accent);
+        background: var(--c-accent);
+        border: 3px solid var(--c-border);
+        border-radius: var(--radius);
+        padding: calc(var(--density) * 13px) 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        box-shadow: 4px 4px 0 var(--c-border);
+      }
+      .big-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 var(--c-border);
+      }
+      .big-btn:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0 0 0 var(--c-border);
+      }
+      .big-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .links {
+        display: grid;
+        gap: calc(var(--density) * 8px);
+      }
+      .link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: inherit;
+        border: 2px solid var(--c-border);
+        border-radius: var(--radius);
+        padding: calc(var(--density) * 10px) 12px;
+        background: var(--c-surface);
+      }
+      .link:hover {
+        background: var(--c-accent);
+        color: var(--c-on-accent);
+      }
+      .link .num {
+        font-family: var(--font-heading);
+        font-weight: 800;
+        font-size: 15px;
+        min-width: 22px;
+      }
+      .link .txt b {
+        display: block;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 0.02em;
+      }
+      .link .txt span {
+        font-size: 11px;
+        color: var(--c-muted);
+      }
+      .link:hover .txt span {
+        color: var(--c-on-accent);
+      }
+      .link .arr {
+        margin-left: auto;
+        font-family: var(--font-heading);
+        font-weight: 800;
+      }
+      .pop-foot {
+        border-top: 3px solid var(--c-border);
+        padding: 9px 16px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--c-muted);
+      }
+
+      /* Options */
+      .options {
+        width: 460px;
+        max-width: 100%;
+        display: grid;
+        gap: calc(var(--density) * 18px);
+      }
+      .opt-title {
+        font-family: var(--font-heading);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 30px;
+        line-height: 0.95;
+        margin: 0;
+        letter-spacing: -0.01em;
+      }
+      .opt-title span {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        color: var(--c-muted);
+        margin-top: 6px;
+      }
+      .panel {
+        background: var(--c-surface);
+        border: 3px solid var(--c-border);
+        border-radius: var(--radius);
+        box-shadow: calc(var(--density) * 7px) calc(var(--density) * 7px) 0
+          var(--c-border);
+        overflow: hidden;
+      }
+      .panel h2 {
+        font-family: var(--font-heading);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 13px;
+        margin: 0;
+        padding: calc(var(--density) * 11px) 16px;
+        background: var(--c-text);
+        color: var(--c-bg);
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: calc(var(--density) * 12px) 16px;
+        border-top: 2px solid var(--c-border);
+      }
+      .row:first-of-type {
+        border-top: 0;
+      }
+      .row .rlabel {
+        font-weight: 700;
+        font-size: 13.5px;
+      }
+      .row .rhint {
+        display: block;
+        font-weight: 400;
+        font-size: 11.5px;
+        color: var(--c-muted);
+        margin-top: 2px;
+      }
+      select {
+        font: inherit;
+        font-weight: 700;
+        font-size: 12.5px;
+        color: var(--c-text);
+        background: var(--c-bg);
+        border: 2px solid var(--c-border);
+        border-radius: 0;
+        padding: 7px 9px;
+      }
+      .sw {
+        position: relative;
+        width: 54px;
+        height: 26px;
+        flex: none;
+        cursor: pointer;
+      }
+      .sw input {
+        position: absolute;
+        opacity: 0;
+      }
+      .sw .b {
+        position: absolute;
+        inset: 0;
+        border: 2px solid var(--c-border);
+        background: var(--c-bg);
+      }
+      .sw .b::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 18px;
+        height: 18px;
+        background: var(--c-border);
+        transition: transform 0.12s steps(3);
+      }
+      .sw input:checked + .b {
+        background: var(--c-accent);
+      }
+      .sw input:checked + .b::after {
+        transform: translateX(28px);
+        background: var(--c-on-accent);
+      }
+      .about-body {
+        padding: calc(var(--density) * 14px) 16px calc(var(--density) * 16px);
+      }
+      .about-body p {
+        margin: 0 0 12px;
+        font-size: 13.5px;
+      }
+      .tags {
+        list-style: none;
+        margin: 0 0 12px;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .tags a {
+        font-family: var(--font-heading);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        color: var(--c-text);
+        border: 2px solid var(--c-border);
+        padding: 5px 10px;
+      }
+      .tags a:hover {
+        background: var(--c-accent);
+        color: var(--c-on-accent);
+      }
+      .ver {
+        margin: 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--c-muted);
+      }
+
+      .design-notes {
+        max-width: 780px;
+        margin: 0 auto 40px;
+        color: var(--c-muted);
+        font-size: 13px;
+      }
+      .design-notes summary {
+        cursor: pointer;
+        color: var(--c-text);
+        font-family: var(--font-heading);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .design-notes p {
+        margin: 10px 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <!-- Popup surface -->
+      <div class="surface">
+        <div class="surface-label">Toolbar popup · 320px</div>
+        <div class="popup block">
+          <div class="pop-head">
+            <h1>Code Self Study</h1>
+            <p>Share · Learn · Ship</p>
+          </div>
+          <div class="pop-body">
+            <button class="big-btn">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
+                <path d="M12 3v13" />
+                <path d="m7 8 5-5 5 5" />
+              </svg>
+              Share Page
+            </button>
+            <nav class="links">
+              <a class="link" href="#">
+                <span class="num">01</span>
+                <span class="txt"
+                  ><b>Coding Forum</b><span>forum.codeselfstudy.com</span></span
+                >
+                <span class="arr">→</span>
+              </a>
+              <a class="link" href="#">
+                <span class="num">02</span>
+                <span class="txt"
+                  ><b>SF Bay Meetups</b
+                  ><span>meetup.com/codeselfstudy</span></span
+                >
+                <span class="arr">→</span>
+              </a>
+              <a class="link" href="#">
+                <span class="num">03</span>
+                <span class="txt"
+                  ><b>Programming Chatroom</b
+                  ><span>codeselfstudy.slack.com</span></span
+                >
+                <span class="arr">→</span>
+              </a>
+            </nav>
+          </div>
+          <div class="pop-foot">
+            <span>Code Self Study</span>
+            <span>v0.11.0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Options surface -->
+      <div class="surface">
+        <div class="surface-label">Options page</div>
+        <div class="options">
+          <h1 class="opt-title">
+            Options<span>Code Self Study Extension</span>
+          </h1>
+          <section class="panel">
+            <h2>Sharing</h2>
+            <div class="row">
+              <label class="rlabel" for="bcat">Default forum category</label>
+              <select id="bcat">
+                <option>General Discussion</option>
+                <option>Help &amp; Support</option>
+                <option>Show &amp; Tell</option>
+                <option>Resources</option>
+              </select>
+            </div>
+            <div class="row">
+              <span class="rlabel"
+                >Selected text as quote
+                <span class="rhint"
+                  >Wrap the selection as a markdown blockquote</span
+                >
+              </span>
+              <label class="sw"
+                ><input type="checkbox" checked /><span class="b"></span
+              ></label>
+            </div>
+            <div class="row">
+              <span class="rlabel">Open forum in a new tab</span>
+              <label class="sw"
+                ><input type="checkbox" checked /><span class="b"></span
+              ></label>
+            </div>
+          </section>
+          <section class="panel">
+            <h2>About</h2>
+            <div class="about-body">
+              <p>
+                One-click sharing of the page you're viewing to the Code Self
+                Study forum, plus quick links to the group's resources.
+              </p>
+              <ul class="tags">
+                <li><a href="#">Forum</a></li>
+                <li><a href="#">Meetups</a></li>
+                <li><a href="#">Chat</a></li>
+              </ul>
+              <p class="ver">Version 0.11.0 — MIT</p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <details class="design-notes">
+      <summary>Design notes — 03 · Brutalist (muted)</summary>
+      <p>
+        <strong>Direction:</strong> raw and structural — 3px ink borders, hard
+        offset drop-shadows, numbered link blocks, and a big uppercase wordmark.
+        The primary action is an oversized block button that physically
+        "presses" (shadow collapses) on click. Confident, but restrained.
+      </p>
+      <p>
+        <strong>Typography:</strong> a heavy grotesk (Arial Black / Helvetica
+        Neue system stack) for headings and controls, plain sans for body; a
+        monospace alternate is available for a more utilitarian read.
+      </p>
+      <p>
+        <strong>Palettes:</strong> deliberately muted, not neon — Concrete (warm
+        greys), Ochre (dusty mustard), and Sage (grey-green). Borders use the
+        text "ink" color, so the brutalist frame inverts cleanly between light
+        and dark.
+      </p>
+    </details>
+
+    <!-- DP:STYLE -->
+    <style id="dp-style">
+      #design-panel {
+        --dp-bg: rgba(28, 30, 34, 0.92);
+        --dp-text: #e7e9ee;
+        --dp-muted: #9aa1ad;
+        --dp-line: rgba(255, 255, 255, 0.14);
+        --dp-active: #6ea8fe;
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 99999;
+        width: 240px;
+        max-height: min(70vh, 560px);
+        overflow: auto;
+        background: var(--dp-bg);
+        color: var(--dp-text);
+        font:
+          12px/1.45 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        border: 1px solid var(--dp-line);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(6px);
+      }
+      #design-panel * {
+        box-sizing: border-box;
+        font: inherit;
+        color: inherit;
+      }
+      #design-panel header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--dp-line);
+      }
+      #design-panel header strong {
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+      #dp-toggle {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        padding: 2px 6px;
+        border-radius: 6px;
+        line-height: 1;
+      }
+      #dp-toggle:hover {
+        background: var(--dp-line);
+      }
+      #design-panel[data-collapsed="true"] {
+        width: auto;
+        max-height: none;
+        overflow: hidden;
+      }
+      #design-panel[data-collapsed="true"] #dp-body {
+        display: none;
+      }
+      #design-panel[data-collapsed="true"] header {
+        border-bottom: 0;
+      }
+      #dp-body {
+        padding: 10px 12px 12px;
+        display: grid;
+        gap: 12px;
+      }
+      #design-panel fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+      #design-panel legend {
+        padding: 0 0 6px;
+        color: var(--dp-muted);
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+      }
+      #design-panel .dp-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      #design-panel .dp-options label {
+        border: 1px solid var(--dp-line);
+        border-radius: 999px;
+        padding: 3px 10px;
+        cursor: pointer;
+        user-select: none;
+      }
+      #design-panel .dp-options input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      #design-panel .dp-options input:checked + span {
+        color: var(--dp-active);
+      }
+      #design-panel .dp-options label:has(input:checked) {
+        border-color: var(--dp-active);
+      }
+      #design-panel .dp-slider {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 8px;
+      }
+      #design-panel .dp-slider input[type="range"] {
+        width: 100%;
+        accent-color: var(--dp-active);
+      }
+      #design-panel .dp-slider output {
+        min-width: 42px;
+        text-align: right;
+        color: var(--dp-muted);
+        font-variant-numeric: tabular-nums;
+      }
+      #dp-reset {
+        width: 100%;
+        border: 1px solid var(--dp-line);
+        background: transparent;
+        border-radius: 8px;
+        padding: 6px 0;
+        cursor: pointer;
+      }
+      #dp-reset:hover {
+        border-color: var(--dp-active);
+        color: var(--dp-active);
+      }
+    </style>
+    <!-- /DP:STYLE -->
+
+    <!-- DP:MARKUP -->
+    <aside
+      id="design-panel"
+      data-collapsed="false"
+      aria-label="Design control panel"
+    >
+      <header>
+        <strong>Design panel</strong>
+        <button
+          id="dp-toggle"
+          type="button"
+          aria-expanded="true"
+          title="Collapse panel"
+        >
+          −
+        </button>
+      </header>
+      <div id="dp-body">
+        <fieldset data-dp-group="mode">
+          <legend>Mode</legend>
+          <div class="dp-options"></div>
+        </fieldset>
+        <fieldset data-dp-group="palette">
+          <legend>Palette</legend>
+          <div class="dp-options"></div>
+        </fieldset>
+        <fieldset data-dp-group="font">
+          <legend>Font</legend>
+          <div class="dp-options"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Radius</legend>
+          <div class="dp-slider">
+            <input
+              type="range"
+              data-dp-range="radius"
+              min="0"
+              max="24"
+              step="1"
+            />
+            <output data-dp-out="radius"></output>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Density</legend>
+          <div class="dp-slider">
+            <input
+              type="range"
+              data-dp-range="density"
+              min="0.8"
+              max="1.3"
+              step="0.05"
+            />
+            <output data-dp-out="density"></output>
+          </div>
+        </fieldset>
+        <button id="dp-reset" type="button">Reset to defaults</button>
+      </div>
+    </aside>
+    <!-- /DP:MARKUP -->
+
+    <script>
+      window.DP_CONFIG = {
+        slug: "03-brutalist",
+        palettes: [
+          { id: "concrete", label: "Concrete" },
+          { id: "ochre", label: "Ochre" },
+          { id: "sage", label: "Sage" },
+        ],
+        fonts: [
+          {
+            id: "grotesk",
+            label: "Grotesk",
+            body: "'Helvetica Neue', Arial, sans-serif",
+            heading: "'Arial Black', 'Helvetica Neue', Impact, sans-serif",
+          },
+          {
+            id: "mono",
+            label: "Mono",
+            body: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+            heading: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+          },
+        ],
+        defaults: {
+          mode: "light",
+          palette: "concrete",
+          font: "grotesk",
+          radius: 0,
+          density: 1,
+        },
+      };
+    </script>
+
+    <!-- DP:SCRIPT -->
+    <script id="dp-script">
+      (function () {
+        var config = window.DP_CONFIG;
+        if (
+          !config ||
+          !config.slug ||
+          !Array.isArray(config.palettes) ||
+          !Array.isArray(config.fonts)
+        ) {
+          console.error(
+            "design-panel: window.DP_CONFIG is missing or malformed"
+          );
+          return;
+        }
+        var KEY = "design-panel:" + config.slug;
+        var root = document.documentElement;
+        var panel = document.getElementById("design-panel");
+        var defaults = {
+          mode: config.defaults.mode === "dark" ? "dark" : "light",
+          palette: idOrFirst(config.palettes, config.defaults.palette),
+          font: idOrFirst(config.fonts, config.defaults.font),
+          radius: clamp(num(config.defaults.radius, 8), 0, 24),
+          density: clamp(num(config.defaults.density, 1), 0.8, 1.3),
+          collapsed: false,
+        };
+
+        function idOrFirst(list, id) {
+          for (var i = 0; i < list.length; i += 1) {
+            if (list[i].id === id) return id;
+          }
+          return list.length > 0 ? list[0].id : "";
+        }
+        function hasId(list, id) {
+          for (var i = 0; i < list.length; i += 1) {
+            if (list[i].id === id) return true;
+          }
+          return false;
+        }
+        function num(value, fallback) {
+          return typeof value === "number" && isFinite(value)
+            ? value
+            : fallback;
+        }
+        function clamp(value, min, max) {
+          return Math.min(max, Math.max(min, value));
+        }
+        function findFont(id) {
+          for (var i = 0; i < config.fonts.length; i += 1) {
+            if (config.fonts[i].id === id) return config.fonts[i];
+          }
+          return config.fonts[0];
+        }
+
+        function load() {
+          var state = {};
+          try {
+            state = JSON.parse(localStorage.getItem(KEY) || "{}") || {};
+          } catch (error) {
+            state = {};
+          }
+          return {
+            mode:
+              state.mode === "dark" || state.mode === "light"
+                ? state.mode
+                : defaults.mode,
+            palette: hasId(config.palettes, state.palette)
+              ? state.palette
+              : defaults.palette,
+            font: hasId(config.fonts, state.font) ? state.font : defaults.font,
+            radius: clamp(num(state.radius, defaults.radius), 0, 24),
+            density: clamp(num(state.density, defaults.density), 0.8, 1.3),
+            collapsed: state.collapsed === true,
+          };
+        }
+        function save() {
+          try {
+            localStorage.setItem(
+              KEY,
+              JSON.stringify(Object.assign({ v: 1 }, current))
+            );
+          } catch (error) {
+            /* storage unavailable (e.g. some file:// modes): live state still works */
+          }
+        }
+
+        var current = load();
+
+        function apply() {
+          root.setAttribute("data-theme", current.mode);
+          root.setAttribute("data-palette", current.palette);
+          root.setAttribute("data-font", current.font);
+          root.style.setProperty("--radius", current.radius + "px");
+          root.style.setProperty("--density", String(current.density));
+          var font = findFont(current.font);
+          root.style.setProperty("--font-body", font.body);
+          root.style.setProperty("--font-heading", font.heading || font.body);
+          panel.setAttribute("data-collapsed", String(current.collapsed));
+          var toggle = document.getElementById("dp-toggle");
+          toggle.textContent = current.collapsed ? "✦" : "−";
+          toggle.setAttribute("aria-expanded", String(!current.collapsed));
+          toggle.setAttribute(
+            "title",
+            current.collapsed ? "Expand panel" : "Collapse panel"
+          );
+          syncControls();
+        }
+
+        function radioGroup(group, options, getValue) {
+          var container = panel.querySelector(
+            '[data-dp-group="' + group + '"] .dp-options'
+          );
+          options.forEach(function (option) {
+            var label = document.createElement("label");
+            var input = document.createElement("input");
+            input.type = "radio";
+            input.name = "dp-" + group + "-" + config.slug;
+            input.setAttribute("value", option.id);
+            input.addEventListener("change", function () {
+              current[group] = option.id;
+              save();
+              apply();
+            });
+            var text = document.createElement("span");
+            text.textContent = option.label;
+            label.appendChild(input);
+            label.appendChild(text);
+            container.appendChild(label);
+          });
+        }
+
+        function syncControls() {
+          ["mode", "palette", "font"].forEach(function (group) {
+            var inputs = panel.querySelectorAll(
+              '[data-dp-group="' + group + '"] input'
+            );
+            inputs.forEach(function (input) {
+              input.checked = input.value === current[group];
+            });
+          });
+          var radius = panel.querySelector('[data-dp-range="radius"]');
+          var density = panel.querySelector('[data-dp-range="density"]');
+          radius.value = String(current.radius);
+          density.value = String(current.density);
+          panel.querySelector('[data-dp-out="radius"]').textContent =
+            current.radius + "px";
+          panel.querySelector('[data-dp-out="density"]').textContent =
+            "×" + current.density.toFixed(2);
+        }
+
+        radioGroup("mode", [
+          { id: "light", label: "Light" },
+          { id: "dark", label: "Dark" },
+        ]);
+        radioGroup("palette", config.palettes);
+        radioGroup("font", config.fonts);
+
+        panel
+          .querySelector('[data-dp-range="radius"]')
+          .addEventListener("input", function (event) {
+            current.radius = clamp(
+              num(Number(event.target.value), defaults.radius),
+              0,
+              24
+            );
+            save();
+            apply();
+          });
+        panel
+          .querySelector('[data-dp-range="density"]')
+          .addEventListener("input", function (event) {
+            current.density = clamp(
+              num(Number(event.target.value), defaults.density),
+              0.8,
+              1.3
+            );
+            save();
+            apply();
+          });
+        document
+          .getElementById("dp-toggle")
+          .addEventListener("click", function () {
+            current.collapsed = !current.collapsed;
+            save();
+            apply();
+          });
+        document
+          .getElementById("dp-reset")
+          .addEventListener("click", function () {
+            try {
+              localStorage.removeItem(KEY);
+            } catch (error) {
+              /* ignore */
+            }
+            current = load();
+            apply();
+          });
+
+        apply();
+      })();
+    </script>
+    <!-- /DP:SCRIPT -->
+  </body>
+</html>
