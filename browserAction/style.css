@@ -1,59 +1,211 @@
-/* @import url("../vendor/font-awesome-5.11.2-all.css"); */
-@font-face {
-  font-family: "Inconsolata";
-  src: url("../fonts/Inconsolata-Regular.ttf") format("truetype");
+/* Modern SaaS look, "Slate" palette. Follows the OS light/dark setting by
+   default; an explicit data-theme="light|dark" on <html> (set from the saved
+   Appearance option) overrides the system setting. */
+:root {
+  --c-bg: #f4f6f8;
+  --c-surface: #ffffff;
+  --c-text: #172029;
+  --c-muted: #64748b;
+  --c-accent: #2563eb;
+  --c-on-accent: #ffffff;
+  --c-border: #e2e8f0;
+  --radius: 10px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #0d1219;
+    --c-surface: #151c26;
+    --c-text: #e6ecf3;
+    --c-muted: #94a3b8;
+    --c-accent: #6ea8fe;
+    --c-on-accent: #0a0f16;
+    --c-border: #253040;
+  }
+}
+:root[data-theme="light"] {
+  --c-bg: #f4f6f8;
+  --c-surface: #ffffff;
+  --c-text: #172029;
+  --c-muted: #64748b;
+  --c-accent: #2563eb;
+  --c-on-accent: #ffffff;
+  --c-border: #e2e8f0;
+}
+:root[data-theme="dark"] {
+  --c-bg: #0d1219;
+  --c-surface: #151c26;
+  --c-text: #e6ecf3;
+  --c-muted: #94a3b8;
+  --c-accent: #6ea8fe;
+  --c-on-accent: #0a0f16;
+  --c-border: #253040;
 }
 
+* {
+  box-sizing: border-box;
+}
 body {
-  background-color: #363636;
-  color: #fff;
-  font-family: "Inconsolata", monospace;
-  min-width: 200px;
-  /* margin: 0; */
-  /* padding: 0; */
-}
-
-ul {
-  padding: 0;
   margin: 0;
+  width: 320px;
+  background: var(--c-surface);
+  color: var(--c-text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
-
-li {
-  list-style-type: none;
-  margin: 19px 0;
+.popup {
+  display: flex;
+  flex-direction: column;
 }
-
-ul a,
-ul a:visited {
+.popup-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--c-border);
+}
+.logo {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--c-accent);
+  color: var(--c-on-accent);
+  flex: none;
+}
+.logo svg {
+  width: 17px;
+  height: 17px;
+}
+.brand {
+  flex: 1;
+  min-width: 0;
+}
+.brand h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+}
+.brand p {
+  margin: 1px 0 0;
+  font-size: 11.5px;
+  color: var(--c-muted);
+}
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  background: var(--c-surface);
+  color: var(--c-muted);
+  cursor: pointer;
+}
+.icon-btn:hover {
+  color: var(--c-accent);
+  border-color: var(--c-accent);
+}
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+.popup-body {
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  padding: 11px 14px;
+  border-radius: var(--radius);
+  background: var(--c-accent);
+  color: var(--c-on-accent);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 18px -10px var(--c-accent);
+}
+.btn-primary:hover {
+  filter: brightness(1.05);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+.btn-primary svg {
+  width: 16px;
+  height: 16px;
+}
+.links {
+  display: grid;
+  gap: 6px;
+}
+.link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
   text-decoration: none;
-  padding: 7px;
-  background-color: #666;
-  border-radius: 2px;
-  color: #fff;
-  font-weight: bold;
-
-  /* TODO make these buttons full-width */
-  /* This isn't working */
-  /* width: 100%; */
+  color: inherit;
+  padding: 9px 10px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
 }
-
-h1,
-h1 a,
-h1 a:visited {
-  color: #41ff00;
-  font-size: 1.27rem;
-  text-decoration: none;
+.link:hover {
+  background: var(--c-bg);
+  border-color: var(--c-border);
 }
-
-#codesOutput table th {
-  text-align: left;
+.link .ico {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 8px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  color: var(--c-accent);
 }
-
-#codesOutput table {
-  border-collapse: collapse;
+.link .ico svg {
+  width: 16px;
+  height: 16px;
 }
-
-#codesOutput table td {
-  border: 1px solid #eee;
-  padding: 7px;
+.link .txt {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.link .txt b {
+  font-weight: 600;
+  font-size: 13.5px;
+}
+.link .txt span {
+  font-size: 11px;
+  color: var(--c-muted);
+}
+.link .chev {
+  margin-left: auto;
+  color: var(--c-muted);
+  opacity: 0.6;
+}
+.popup-foot {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-top: 1px solid var(--c-border);
+  font-size: 11px;
+  color: var(--c-muted);
+}
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
 }

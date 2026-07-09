@@ -1,1 +1,203 @@
-/* CSS for the options page goes here */
+/* Modern SaaS look, "Slate" palette — matches the popup. Follows the OS
+   light/dark setting by default; an explicit data-theme="light|dark" on <html>
+   (set from the saved Appearance option) overrides it. */
+:root {
+  --c-bg: #f4f6f8;
+  --c-surface: #ffffff;
+  --c-text: #172029;
+  --c-muted: #64748b;
+  --c-accent: #2563eb;
+  --c-on-accent: #ffffff;
+  --c-border: #e2e8f0;
+  --radius: 10px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #0d1219;
+    --c-surface: #151c26;
+    --c-text: #e6ecf3;
+    --c-muted: #94a3b8;
+    --c-accent: #6ea8fe;
+    --c-on-accent: #0a0f16;
+    --c-border: #253040;
+  }
+}
+:root[data-theme="light"] {
+  --c-bg: #f4f6f8;
+  --c-surface: #ffffff;
+  --c-text: #172029;
+  --c-muted: #64748b;
+  --c-accent: #2563eb;
+  --c-on-accent: #ffffff;
+  --c-border: #e2e8f0;
+}
+:root[data-theme="dark"] {
+  --c-bg: #0d1219;
+  --c-surface: #151c26;
+  --c-text: #e6ecf3;
+  --c-muted: #94a3b8;
+  --c-accent: #6ea8fe;
+  --c-on-accent: #0a0f16;
+  --c-border: #253040;
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+  display: grid;
+  gap: 18px;
+}
+.page-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.page-head .logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--c-accent);
+  color: var(--c-on-accent);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.page-head .logo svg {
+  width: 22px;
+  height: 22px;
+}
+.page-head h1 {
+  margin: 0;
+  font-size: 22px;
+}
+.page-head p {
+  margin: 2px 0 0;
+  color: var(--c-muted);
+  font-size: 13px;
+}
+.card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 12px 30px -24px rgba(15, 20, 40, 0.5);
+}
+.card h2 {
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  margin: 0 0 14px;
+}
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--c-border);
+}
+.field:first-of-type {
+  border-top: 0;
+}
+.field label,
+.field .flabel {
+  font-size: 13.5px;
+}
+.field .hint {
+  display: block;
+  font-size: 11.5px;
+  color: var(--c-muted);
+  margin-top: 2px;
+}
+select {
+  font: inherit;
+  font-size: 13px;
+  color: var(--c-text);
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  padding: 7px 10px;
+}
+.switch {
+  position: relative;
+  width: 40px;
+  height: 23px;
+  flex: none;
+}
+.switch input {
+  position: absolute;
+  opacity: 0;
+}
+.switch .track {
+  position: absolute;
+  inset: 0;
+  background: var(--c-border);
+  border-radius: 999px;
+  transition: background 0.15s ease;
+}
+.switch .track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--c-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease;
+}
+.switch input:checked + .track {
+  background: var(--c-accent);
+}
+.switch input:checked + .track::after {
+  transform: translateX(17px);
+}
+.about p {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+}
+.about-links {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.about-links a {
+  font-size: 12.5px;
+  color: var(--c-accent);
+  text-decoration: none;
+  border: 1px solid var(--c-border);
+  border-radius: 999px;
+  padding: 4px 11px;
+}
+.about-links a:hover {
+  border-color: var(--c-accent);
+}
+.ver {
+  font-size: 12px;
+  color: var(--c-muted);
+  margin: 0;
+}
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
