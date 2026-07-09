@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-palette="phosphor" data-font="mono">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>02 · Terminal — Code Self Study mockup</title>
+    <style>
+      /* ---- Palettes: all 7 contract vars, light AND dark ---- */
+      [data-palette="phosphor"] {
+        --c-bg: #eef3ee;
+        --c-surface: #ffffff;
+        --c-text: #143d1c;
+        --c-muted: #4e7357;
+        --c-accent: #1a9e2e;
+        --c-on-accent: #ffffff;
+        --c-border: #cfe0d3;
+      }
+      [data-palette="phosphor"][data-theme="dark"] {
+        --c-bg: #0a0f0b;
+        --c-surface: #0f150f;
+        --c-text: #b8f5c0;
+        --c-muted: #5f8f68;
+        --c-accent: #41ff00;
+        --c-on-accent: #06120a;
+        --c-border: #1d2c1f;
+      }
+      [data-palette="amber"] {
+        --c-bg: #f5f0e6;
+        --c-surface: #fffdf7;
+        --c-text: #4a3410;
+        --c-muted: #7a6535;
+        --c-accent: #b8730a;
+        --c-on-accent: #ffffff;
+        --c-border: #e6dcc4;
+      }
+      [data-palette="amber"][data-theme="dark"] {
+        --c-bg: #0f0b04;
+        --c-surface: #17110a;
+        --c-text: #ffd38a;
+        --c-muted: #a07b45;
+        --c-accent: #ffb000;
+        --c-on-accent: #1a1206;
+        --c-border: #2c2110;
+      }
+      [data-palette="ice"] {
+        --c-bg: #eef5f7;
+        --c-surface: #ffffff;
+        --c-text: #0e343d;
+        --c-muted: #4c7580;
+        --c-accent: #0a94ad;
+        --c-on-accent: #ffffff;
+        --c-border: #cbe2e8;
+      }
+      [data-palette="ice"][data-theme="dark"] {
+        --c-bg: #060f12;
+        --c-surface: #0b171b;
+        --c-text: #b3ecf5;
+        --c-muted: #5b8b95;
+        --c-accent: #22d3ee;
+        --c-on-accent: #04141a;
+        --c-border: #143038;
+      }
+
+      /* ---- Component CSS: contract variables only ---- */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--c-bg);
+        color: var(--c-text);
+        font-family: var(--font-body);
+        line-height: 1.5;
+      }
+      /* subtle CRT scanline, tinted from the text color so it themes cleanly */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          to bottom,
+          transparent 0 2px,
+          color-mix(in srgb, var(--c-text) 5%, transparent) 2px 3px
+        );
+        opacity: 0.5;
+        z-index: 1;
+      }
+      .stage {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--density) * 30px);
+        align-items: flex-start;
+        justify-content: center;
+        padding: calc(var(--density) * 40px) 20px 120px;
+        max-width: 920px;
+        margin: 0 auto;
+      }
+      .surface {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--density) * 10px);
+      }
+      .surface-label {
+        font-size: 12px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--c-muted);
+      }
+      .surface-label::before {
+        content: "// ";
+      }
+
+      /* terminal window chrome */
+      .win {
+        background: var(--c-surface);
+        border: 1px solid var(--c-border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 0 0 1px
+          color-mix(in srgb, var(--c-accent) 12%, transparent);
+      }
+      .win-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: calc(var(--density) * 9px) 12px;
+        border-bottom: 1px solid var(--c-border);
+        background: color-mix(in srgb, var(--c-text) 5%, transparent);
+      }
+      .dots {
+        display: flex;
+        gap: 6px;
+      }
+      .dots i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--c-border);
+        display: inline-block;
+      }
+      .win-bar b {
+        font-size: 12px;
+        color: var(--c-muted);
+        font-weight: 500;
+      }
+      .prompt {
+        color: var(--c-accent);
+      }
+
+      /* Popup */
+      .popup {
+        width: 340px;
+      }
+      .win-body {
+        padding: calc(var(--density) * 15px);
+        display: grid;
+        gap: calc(var(--density) * 13px);
+        font-size: 13px;
+      }
+      .banner {
+        color: var(--c-accent);
+        white-space: pre;
+        font-size: 11px;
+        line-height: 1.25;
+        margin: 0;
+        text-shadow: 0 0 8px
+          color-mix(in srgb, var(--c-accent) 45%, transparent);
+      }
+      .cmd-btn {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        width: 100%;
+        cursor: pointer;
+        text-align: left;
+        font-family: inherit;
+        font-size: 13.5px;
+        color: var(--c-on-accent);
+        background: var(--c-accent);
+        border: 1px solid var(--c-accent);
+        border-radius: var(--radius);
+        padding: calc(var(--density) * 11px) 13px;
+        text-shadow: none;
+      }
+      .cmd-btn:hover {
+        filter: brightness(1.08);
+      }
+      .cmd-btn .caret {
+        font-weight: 700;
+      }
+      .cmd-btn svg {
+        width: 15px;
+        height: 15px;
+        margin-left: auto;
+      }
+      .links {
+        display: grid;
+        gap: 2px;
+      }
+      .link {
+        display: grid;
+        grid-template-columns: 1.1em 1fr auto;
+        align-items: baseline;
+        gap: 9px;
+        text-decoration: none;
+        color: inherit;
+        padding: calc(var(--density) * 8px) 8px;
+        border: 1px solid transparent;
+        border-radius: calc(var(--radius) * 0.6);
+      }
+      .link:hover {
+        border-color: var(--c-border);
+        background: color-mix(in srgb, var(--c-accent) 8%, transparent);
+      }
+      .link .mark {
+        color: var(--c-accent);
+      }
+      .link .name {
+        font-weight: 600;
+      }
+      .link .host {
+        color: var(--c-muted);
+        font-size: 11.5px;
+      }
+      .link .host::before {
+        content: "# ";
+      }
+      .win-foot {
+        border-top: 1px solid var(--c-border);
+        padding: 9px 15px;
+        font-size: 11px;
+        color: var(--c-muted);
+        display: flex;
+        justify-content: space-between;
+      }
+      .blink {
+        display: inline-block;
+        width: 8px;
+        height: 14px;
+        background: var(--c-accent);
+        vertical-align: text-bottom;
+        animation: blink 1.1s steps(1) infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* Options */
+      .options {
+        width: 460px;
+        max-width: 100%;
+      }
+      .opt-body {
+        padding: calc(var(--density) * 16px);
+        font-size: 13px;
+        display: grid;
+        gap: calc(var(--density) * 18px);
+      }
+      .section-h {
+        color: var(--c-accent);
+        margin: 0 0 calc(var(--density) * 10px);
+        font-size: 13px;
+      }
+      .kv {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: calc(var(--density) * 7px) 0;
+        border-bottom: 1px dashed var(--c-border);
+      }
+      .kv:last-child {
+        border-bottom: 0;
+      }
+      .kv .k {
+        color: var(--c-text);
+      }
+      .kv .k .hint {
+        display: block;
+        color: var(--c-muted);
+        font-size: 11.5px;
+      }
+      select {
+        font: inherit;
+        font-size: 12.5px;
+        color: var(--c-text);
+        background: var(--c-bg);
+        border: 1px solid var(--c-border);
+        border-radius: calc(var(--radius) * 0.6);
+        padding: 6px 9px;
+      }
+      /* square terminal toggle */
+      .tog {
+        position: relative;
+        width: 46px;
+        height: 22px;
+        flex: none;
+        cursor: pointer;
+      }
+      .tog input {
+        position: absolute;
+        opacity: 0;
+      }
+      .tog .box {
+        position: absolute;
+        inset: 0;
+        border: 1px solid var(--c-border);
+        border-radius: calc(var(--radius) * 0.5);
+        color: var(--c-muted);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 6px;
+      }
+      .tog .box::before {
+        content: "OFF";
+      }
+      .tog .box::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        background: var(--c-muted);
+        transition: 0.15s ease;
+      }
+      .tog input:checked + .box {
+        border-color: var(--c-accent);
+        color: var(--c-accent);
+        justify-content: flex-start;
+        padding-left: 6px;
+      }
+      .tog input:checked + .box::before {
+        content: "ON";
+      }
+      .tog input:checked + .box::after {
+        left: auto;
+        right: 2px;
+        background: var(--c-accent);
+        box-shadow: 0 0 8px color-mix(in srgb, var(--c-accent) 60%, transparent);
+      }
+      .about-lines {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 4px;
+        color: var(--c-muted);
+      }
+      .about-lines a {
+        color: var(--c-accent);
+        text-decoration: none;
+      }
+      .about-lines a:hover {
+        text-decoration: underline;
+      }
+
+      .design-notes {
+        position: relative;
+        z-index: 2;
+        max-width: 780px;
+        margin: 0 auto 40px;
+        color: var(--c-muted);
+        font-size: 13px;
+      }
+      .design-notes summary {
+        cursor: pointer;
+        color: var(--c-text);
+      }
+      .design-notes p {
+        margin: 10px 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <!-- Popup surface -->
+      <div class="surface">
+        <div class="surface-label">Toolbar popup · 340px</div>
+        <div class="popup win">
+          <div class="win-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <b><span class="prompt">➜</span> codeselfstudy</b>
+          </div>
+          <div class="win-body">
+            <pre class="banner">
+┌─ code self study ─┐
+└ share · learn · ship ┘</pre>
+            <button class="cmd-btn">
+              <span class="caret">❯</span> share --current-page
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
+                <path d="M12 3v13" />
+                <path d="m7 8 5-5 5 5" />
+              </svg>
+            </button>
+            <nav class="links">
+              <a class="link" href="#">
+                <span class="mark">›</span>
+                <span
+                  ><span class="name">forum</span>
+                  <span class="host">forum.codeselfstudy.com</span></span
+                >
+              </a>
+              <a class="link" href="#">
+                <span class="mark">›</span>
+                <span
+                  ><span class="name">meetups</span>
+                  <span class="host">meetup.com/codeselfstudy</span></span
+                >
+              </a>
+              <a class="link" href="#">
+                <span class="mark">›</span>
+                <span
+                  ><span class="name">chat</span>
+                  <span class="host">codeselfstudy.slack.com</span></span
+                >
+              </a>
+            </nav>
+          </div>
+          <div class="win-foot">
+            <span>ready<span class="blink"></span></span>
+            <span>v0.11.0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Options surface -->
+      <div class="surface">
+        <div class="surface-label">Options page</div>
+        <div class="options win">
+          <div class="win-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <b><span class="prompt">➜</span> codeselfstudy --config</b>
+          </div>
+          <div class="opt-body">
+            <section>
+              <h2 class="section-h">[sharing]</h2>
+              <div class="kv">
+                <span class="k">default_category</span>
+                <select>
+                  <option>general-discussion</option>
+                  <option>help</option>
+                  <option>show-and-tell</option>
+                  <option>resources</option>
+                </select>
+              </div>
+              <div class="kv">
+                <span class="k"
+                  >selection_as_quote
+                  <span class="hint"
+                    >wrap selection as a markdown blockquote</span
+                  >
+                </span>
+                <label class="tog"
+                  ><input type="checkbox" checked /><span class="box"></span
+                ></label>
+              </div>
+              <div class="kv">
+                <span class="k">open_in_new_tab</span>
+                <label class="tog"
+                  ><input type="checkbox" checked /><span class="box"></span
+                ></label>
+              </div>
+            </section>
+            <section>
+              <h2 class="section-h">[about]</h2>
+              <ul class="about-lines">
+                <li>one-click sharing to the code self study forum</li>
+                <li>
+                  <a href="#">forum</a> · <a href="#">meetups</a> ·
+                  <a href="#">chat</a>
+                </li>
+                <li>version 0.11.0 — MIT</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <details class="design-notes">
+      <summary>Design notes — 02 · Terminal</summary>
+      <p>
+        <strong>Direction:</strong> a developer-console feel. Each surface is a
+        terminal window with a title bar, the primary action reads as a command
+        (<code>❯ share --current-page</code>), links are a menu, and the options
+        page is a config file of <code>key = value</code> rows with square
+        ON/OFF toggles. A faint CRT scanline (tinted from the text color) sits
+        over everything.
+      </p>
+      <p>
+        <strong>Typography:</strong> monospace throughout — the closest system
+        stack to the extension's real vendored Inconsolata. A second monospace
+        stack is offered as an alternate.
+      </p>
+      <p>
+        <strong>Palettes:</strong> Phosphor green (the current UI's
+        <code>#41ff00</code> lineage), Amber (vintage CRT), and Ice cyan. Dark
+        is the native mode; each palette also ships a readable "paper terminal"
+        light variant.
+      </p>
+    </details>
+
+    <!-- DP:STYLE -->
+    <style id="dp-style">
+      #design-panel {
+        --dp-bg: rgba(28, 30, 34, 0.92);
+        --dp-text: #e7e9ee;
+        --dp-muted: #9aa1ad;
+        --dp-line: rgba(255, 255, 255, 0.14);
+        --dp-active: #6ea8fe;
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 99999;
+        width: 240px;
+        max-height: min(70vh, 560px);
+        overflow: auto;
+        background: var(--dp-bg);
+        color: var(--dp-text);
+        font:
+          12px/1.45 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        border: 1px solid var(--dp-line);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(6px);
+      }
+      #design-panel * {
+        box-sizing: border-box;
+        font: inherit;
+        color: inherit;
+      }
+      #design-panel header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--dp-line);
+      }
+      #design-panel header strong {
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+      #dp-toggle {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        padding: 2px 6px;
+        border-radius: 6px;
+        line-height: 1;
+      }
+      #dp-toggle:hover {
+        background: var(--dp-line);
+      }
+      #design-panel[data-collapsed="true"] {
+        width: auto;
+        max-height: none;
+        overflow: hidden;
+      }
+      #design-panel[data-collapsed="true"] #dp-body {
+        display: none;
+      }
+      #design-panel[data-collapsed="true"] header {
+        border-bottom: 0;
+      }
+      #dp-body {
+        padding: 10px 12px 12px;
+        display: grid;
+        gap: 12px;
+      }
+      #design-panel fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+      #design-panel legend {
+        padding: 0 0 6px;
+        color: var(--dp-muted);
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+      }
+      #design-panel .dp-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      #design-panel .dp-options label {
+        border: 1px solid var(--dp-line);
+        border-radius: 999px;
+        padding: 3px 10px;
+        cursor: pointer;
+        user-select: none;
+      }
+      #design-panel .dp-options input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      #design-panel .dp-options input:checked + span {
+        color: var(--dp-active);
+      }
+      #design-panel .dp-options label:has(input:checked) {
+        border-color: var(--dp-active);
+      }
+      #design-panel .dp-slider {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 8px;
+      }
+      #design-panel .dp-slider input[type="range"] {
+        width: 100%;
+        accent-color: var(--dp-active);
+      }
+      #design-panel .dp-slider output {
+        min-width: 42px;
+        text-align: right;
+        color: var(--dp-muted);
+        font-variant-numeric: tabular-nums;
+      }
+      #dp-reset {
+        width: 100%;
+        border: 1px solid var(--dp-line);
+        background: transparent;
+        border-radius: 8px;
+        padding: 6px 0;
+        cursor: pointer;
+      }
+      #dp-reset:hover {
+        border-color: var(--dp-active);
+        color: var(--dp-active);
+      }
+    </style>
+    <!-- /DP:STYLE -->
+
+    <!-- DP:MARKUP -->
+    <aside
+      id="design-panel"
+      data-collapsed="false"
+      aria-label="Design control panel"
+    >
+      <header>
+        <strong>Design panel</strong>
+        <button
+          id="dp-toggle"
+          type="button"
+          aria-expanded="true"
+          title="Collapse panel"
+        >
+          −
+        </button>
+      </header>
+      <div id="dp-body">
+        <fieldset data-dp-group="mode">
+          <legend>Mode</legend>
+          <div class="dp-options"></div>
+        </fieldset>
+        <fieldset data-dp-group="palette">
+          <legend>Palette</legend>
+          <div class="dp-options"></div>
+        </fieldset>
+        <fieldset data-dp-group="font">
+          <legend>Font</legend>
+          <div class="dp-options"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Radius</legend>
+          <div class="dp-slider">
+            <input
+              type="range"
+              data-dp-range="radius"
+              min="0"
+              max="24"
+              step="1"
+            />
+            <output data-dp-out="radius"></output>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Density</legend>
+          <div class="dp-slider">
+            <input
+              type="range"
+              data-dp-range="density"
+              min="0.8"
+              max="1.3"
+              step="0.05"
+            />
+            <output data-dp-out="density"></output>
+          </div>
+        </fieldset>
+        <button id="dp-reset" type="button">Reset to defaults</button>
+      </div>
+    </aside>
+    <!-- /DP:MARKUP -->
+
+    <script>
+      window.DP_CONFIG = {
+        slug: "02-terminal",
+        palettes: [
+          { id: "phosphor", label: "Phosphor" },
+          { id: "amber", label: "Amber" },
+          { id: "ice", label: "Ice" },
+        ],
+        fonts: [
+          {
+            id: "mono",
+            label: "Mono",
+            body: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+            heading: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+          },
+          {
+            id: "courier",
+            label: "Courier",
+            body: "'Courier New', Courier, monospace",
+            heading: "'Courier New', Courier, monospace",
+          },
+        ],
+        defaults: {
+          mode: "dark",
+          palette: "phosphor",
+          font: "mono",
+          radius: 3,
+          density: 1,
+        },
+      };
+    </script>
+
+    <!-- DP:SCRIPT -->
+    <script id="dp-script">
+      (function () {
+        var config = window.DP_CONFIG;
+        if (
+          !config ||
+          !config.slug ||
+          !Array.isArray(config.palettes) ||
+          !Array.isArray(config.fonts)
+        ) {
+          console.error(
+            "design-panel: window.DP_CONFIG is missing or malformed"
+          );
+          return;
+        }
+        var KEY = "design-panel:" + config.slug;
+        var root = document.documentElement;
+        var panel = document.getElementById("design-panel");
+        var defaults = {
+          mode: config.defaults.mode === "dark" ? "dark" : "light",
+          palette: idOrFirst(config.palettes, config.defaults.palette),
+          font: idOrFirst(config.fonts, config.defaults.font),
+          radius: clamp(num(config.defaults.radius, 8), 0, 24),
+          density: clamp(num(config.defaults.density, 1), 0.8, 1.3),
+          collapsed: false,
+        };
+
+        function idOrFirst(list, id) {
+          for (var i = 0; i < list.length; i += 1) {
+            if (list[i].id === id) return id;
+          }
+          return list.length > 0 ? list[0].id : "";
+        }
+        function hasId(list, id) {
+          for (var i = 0; i < list.length; i += 1) {
+            if (list[i].id === id) return true;
+          }
+          return false;
+        }
+        function num(value, fallback) {
+          return typeof value === "number" && isFinite(value)
+            ? value
+            : fallback;
+        }
+        function clamp(value, min, max) {
+          return Math.min(max, Math.max(min, value));
+        }
+        function findFont(id) {
+          for (var i = 0; i < config.fonts.length; i += 1) {
+            if (config.fonts[i].id === id) return config.fonts[i];
+          }
+          return config.fonts[0];
+        }
+
+        function load() {
+          var state = {};
+          try {
+            state = JSON.parse(localStorage.getItem(KEY) || "{}") || {};
+          } catch (error) {
+            state = {};
+          }
+          return {
+            mode:
+              state.mode === "dark" || state.mode === "light"
+                ? state.mode
+                : defaults.mode,
+            palette: hasId(config.palettes, state.palette)
+              ? state.palette
+              : defaults.palette,
+            font: hasId(config.fonts, state.font) ? state.font : defaults.font,
+            radius: clamp(num(state.radius, defaults.radius), 0, 24),
+            density: clamp(num(state.density, defaults.density), 0.8, 1.3),
+            collapsed: state.collapsed === true,
+          };
+        }
+        function save() {
+          try {
+            localStorage.setItem(
+              KEY,
+              JSON.stringify(Object.assign({ v: 1 }, current))
+            );
+          } catch (error) {
+            /* storage unavailable (e.g. some file:// modes): live state still works */
+          }
+        }
+
+        var current = load();
+
+        function apply() {
+          root.setAttribute("data-theme", current.mode);
+          root.setAttribute("data-palette", current.palette);
+          root.setAttribute("data-font", current.font);
+          root.style.setProperty("--radius", current.radius + "px");
+          root.style.setProperty("--density", String(current.density));
+          var font = findFont(current.font);
+          root.style.setProperty("--font-body", font.body);
+          root.style.setProperty("--font-heading", font.heading || font.body);
+          panel.setAttribute("data-collapsed", String(current.collapsed));
+          var toggle = document.getElementById("dp-toggle");
+          toggle.textContent = current.collapsed ? "✦" : "−";
+          toggle.setAttribute("aria-expanded", String(!current.collapsed));
+          toggle.setAttribute(
+            "title",
+            current.collapsed ? "Expand panel" : "Collapse panel"
+          );
+          syncControls();
+        }
+
+        function radioGroup(group, options, getValue) {
+          var container = panel.querySelector(
+            '[data-dp-group="' + group + '"] .dp-options'
+          );
+          options.forEach(function (option) {
+            var label = document.createElement("label");
+            var input = document.createElement("input");
+            input.type = "radio";
+            input.name = "dp-" + group + "-" + config.slug;
+            input.setAttribute("value", option.id);
+            input.addEventListener("change", function () {
+              current[group] = option.id;
+              save();
+              apply();
+            });
+            var text = document.createElement("span");
+            text.textContent = option.label;
+            label.appendChild(input);
+            label.appendChild(text);
+            container.appendChild(label);
+          });
+        }
+
+        function syncControls() {
+          ["mode", "palette", "font"].forEach(function (group) {
+            var inputs = panel.querySelectorAll(
+              '[data-dp-group="' + group + '"] input'
+            );
+            inputs.forEach(function (input) {
+              input.checked = input.value === current[group];
+            });
+          });
+          var radius = panel.querySelector('[data-dp-range="radius"]');
+          var density = panel.querySelector('[data-dp-range="density"]');
+          radius.value = String(current.radius);
+          density.value = String(current.density);
+          panel.querySelector('[data-dp-out="radius"]').textContent =
+            current.radius + "px";
+          panel.querySelector('[data-dp-out="density"]').textContent =
+            "×" + current.density.toFixed(2);
+        }
+
+        radioGroup("mode", [
+          { id: "light", label: "Light" },
+          { id: "dark", label: "Dark" },
+        ]);
+        radioGroup("palette", config.palettes);
+        radioGroup("font", config.fonts);
+
+        panel
+          .querySelector('[data-dp-range="radius"]')
+          .addEventListener("input", function (event) {
+            current.radius = clamp(
+              num(Number(event.target.value), defaults.radius),
+              0,
+              24
+            );
+            save();
+            apply();
+          });
+        panel
+          .querySelector('[data-dp-range="density"]')
+          .addEventListener("input", function (event) {
+            current.density = clamp(
+              num(Number(event.target.value), defaults.density),
+              0.8,
+              1.3
+            );
+            save();
+            apply();
+          });
+        document
+          .getElementById("dp-toggle")
+          .addEventListener("click", function () {
+            current.collapsed = !current.collapsed;
+            save();
+            apply();
+          });
+        document
+          .getElementById("dp-reset")
+          .addEventListener("click", function () {
+            try {
+              localStorage.removeItem(KEY);
+            } catch (error) {
+              /* ignore */
+            }
+            current = load();
+            apply();
+          });
+
+        apply();
+      })();
+    </script>
+    <!-- /DP:SCRIPT -->
+  </body>
+</html>

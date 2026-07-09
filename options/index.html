@@ -2,10 +2,109 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="style.css" rel="stylesheet" />
   </head>
   <body>
-    <h1 id="myHeading">Options coming soon</h1>
+    <main class="wrap">
+      <header class="page-head">
+        <span class="logo" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+            <path d="M16 3h3a2 2 0 0 1 2 2v3" />
+            <path d="M8 21H5a2 2 0 0 1-2-2v-3" />
+            <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+            <path d="M9 12h6" />
+            <path d="M12 9v6" />
+          </svg>
+        </span>
+        <div>
+          <h1>Code Self Study</h1>
+          <p>Extension options</p>
+        </div>
+      </header>
+
+      <section class="card">
+        <h2>Appearance</h2>
+        <div class="field">
+          <label for="theme"
+            >Theme
+            <span class="hint"
+              >Follow your system setting, or force light / dark</span
+            >
+          </label>
+          <select id="theme">
+            <option value="system">System</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Sharing</h2>
+        <div class="field">
+          <span class="flabel"
+            >Include selected text as a quote
+            <span class="hint"
+              >Wraps your selection as a markdown blockquote</span
+            >
+          </span>
+          <label class="switch"
+            ><input type="checkbox" id="quote" /><span class="track"></span
+          ></label>
+        </div>
+        <div class="field">
+          <span class="flabel">Open the forum in a new tab</span>
+          <label class="switch"
+            ><input type="checkbox" id="newTab" /><span class="track"></span
+          ></label>
+        </div>
+      </section>
+
+      <section class="card about">
+        <h2>About</h2>
+        <p>
+          One-click sharing of the page you're viewing to the Code Self Study
+          Discourse forum, plus quick links to the group's resources.
+        </p>
+        <ul class="about-links">
+          <li>
+            <a
+              href="https://forum.codeselfstudy.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Coding Forum</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.meetup.com/codeselfstudy"
+              target="_blank"
+              rel="noopener noreferrer"
+              >SF Bay Meetups</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://codeselfstudy.slack.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Programming Chatroom</a
+            >
+          </li>
+        </ul>
+        <p class="ver" id="version"></p>
+      </section>
+    </main>
+    <script src="../vendor/browser-polyfill.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
