@@ -134,7 +134,6 @@ body {
   font-family: inherit;
   font-size: 14px;
   font-weight: 600;
-  box-shadow: 0 8px 18px -10px var(--c-accent);
 }
 .btn-primary:hover {
   filter: brightness(1.05);
