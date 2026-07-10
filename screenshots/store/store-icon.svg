@@ -1,0 +1,29 @@
+<svg width="128" height="128" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Recreation of the existing toolbar icon: lime square brackets on black,
+       with the original's subtle neon glow. Geometry sampled from
+       icons/icon.png (64px grid). -->
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.4"/>
+    </filter>
+  </defs>
+  <rect x="0" y="0" width="64" height="64" fill="#000000"/>
+  <!-- soft glow layer -->
+  <g fill="#00FF00" filter="url(#glow)" opacity="0.7">
+    <rect x="13" y="8"  width="4" height="45"/>
+    <rect x="13" y="8"  width="9" height="3"/>
+    <rect x="13" y="50" width="9" height="3"/>
+    <rect x="47" y="8"  width="4" height="45"/>
+    <rect x="42" y="8"  width="9" height="3"/>
+    <rect x="42" y="50" width="9" height="3"/>
+  </g>
+  <!-- crisp strokes on top -->
+  <g fill="#00FF00" shape-rendering="crispEdges">
+    <rect x="13" y="8"  width="4" height="45"/>
+    <rect x="13" y="8"  width="9" height="3"/>
+    <rect x="13" y="50" width="9" height="3"/>
+    <rect x="47" y="8"  width="4" height="45"/>
+    <rect x="42" y="8"  width="9" height="3"/>
+    <rect x="42" y="50" width="9" height="3"/>
+  </g>
+</svg>
